@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Closed Captions",
+  "description": "Generate your own closed captions with zoom",
+  "version": "1",
+  "author": "Jackson",
+  "short_name": "CC",
+  "browser_action": {
+    "default_icon": "dog.png",
+    "default_title": "Closed Captions",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "dog16.png",
+    "48": "dog48.png",
+    "128": "dog128.png"
+  },
+  "permissions": 
+  ["activeTab",
+    "contextMenus"],
+  "content_scripts": [{
+    "js": ["content.js"],
+    "matches": ["<all_urls>"],
+    "all_frames": true
+  }]
+}
