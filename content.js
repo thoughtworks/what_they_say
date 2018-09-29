@@ -2,6 +2,29 @@ div = document.createElement('div');
 setDivStyle(div);
 var showMaxSpeeches = 10
 var wholetext = ""
+var timer;
+
+
+var recognition = new webkitSpeechRecognition();
+recognition.continuous = false;
+recognition.interimResults = true;
+recognition.lang = "pt-BR";
+
+recognition.onresult = function(event) { 
+  console.log("teste2")
+  var sentence = makeASentence(event);
+  makeClosedCaption(sentence)
+  recognition.start();
+}
+
+recognition.onspeechend = function() {
+  console.log('Speech has stopped being detected');
+}
+
+recognition.onend = function(event) {
+  recognition.start();
+}
+
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -17,16 +40,9 @@ chrome.runtime.onMessage.addListener(
 
 
   function startRecognition() {
-    var recognition = new webkitSpeechRecognition();
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = "pt-BR";
-
-    recognition.onresult = function(event) { 
-      var sentence = makeASentence(event);
-      makeClosedCaption(sentence)
-    }
+    //clearInterval(timer);
     recognition.start();
+    //timer = setInterval(resetVoiceRecog, 15000);
   }
 
 
@@ -78,4 +94,8 @@ chrome.runtime.onMessage.addListener(
     div.style.borderRadius = "5px";
     div.style.zIndex= "10000";
     div.style.fontFamily = "Arial";
+  }
+
+  function resetVoiceRecog() {
+     recognition.stop();
   }
