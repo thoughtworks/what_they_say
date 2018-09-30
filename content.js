@@ -1,20 +1,19 @@
-div = document.createElement('div');
-setDivStyle(div);
 var showMaxSpeeches = 10
 var wholetext = ""
-var timer;
-
-
 var recognition = new webkitSpeechRecognition();
+var isErrorHappen = false
+
+div = document.createElement('div');
+setDivStyle(div);
+
 recognition.continuous = false;
 recognition.interimResults = true;
 recognition.lang = "pt-BR";
 
 recognition.onresult = function(event) { 
-  console.log("teste2")
+  console.log("speech start")
   var sentence = makeASentence(event);
   makeClosedCaption(sentence)
-  recognition.start();
 }
 
 recognition.onspeechend = function() {
@@ -22,7 +21,16 @@ recognition.onspeechend = function() {
 }
 
 recognition.onend = function(event) {
-  recognition.start();
+  if (!isErrorHappen) {
+    recognition.start();
+  }
+}
+
+recognition.onerror = function(event) {
+  isErrorHappen = true
+  recognition.stop();
+  console.log("error happens click to transcription again")
+  console.log(event.error); // this works
 }
 
 
@@ -30,21 +38,15 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action == "generate"){
       startRecognition();
-    }
-
-    if (request.action == "history") {
+    } else if (request.action == "history") {
       console.log(wholetext)
     }
 
   });
 
-
   function startRecognition() {
-    //clearInterval(timer);
     recognition.start();
-    //timer = setInterval(resetVoiceRecog, 15000);
   }
-
 
   function makeASentence(event) {
     var partialSentence = ""
@@ -94,8 +96,4 @@ chrome.runtime.onMessage.addListener(
     div.style.borderRadius = "5px";
     div.style.zIndex= "10000";
     div.style.fontFamily = "Arial";
-  }
-
-  function resetVoiceRecog() {
-     recognition.stop();
   }
