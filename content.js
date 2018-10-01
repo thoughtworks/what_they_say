@@ -82,14 +82,14 @@ chrome.runtime.onMessage.addListener(
   }
 
   function setDivStyle() {
-    div.style.bottom = '50%';
+    div.style.bottom = '5%';
     div.style.left = 0;
     div.style.textAlign = 'center';
     div.style.backgroundColor = 'rgba(0,0,0,0.8)';
     div.style.position = 'absolute';
-    div.style.color = 'white';
+    div.style.color = 'rgba(255, 255, 255, 0.97)';
     div.style.padding = '10px';
-    div.style.fontSize = '30px';
+    div.style.fontSize = '20px';
     div.style.width = '50%';
     div.style.transform = 'translate(50%)';
     div.style.border = '2px solid white';
