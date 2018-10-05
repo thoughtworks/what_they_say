@@ -30,7 +30,7 @@ recognition.onerror = function(event) {
   isErrorHappen = true
   recognition.stop();
   console.log("error happens click to transcription again")
-  console.log(event.error); // this works
+  console.log(event.error);
 }
 
 
@@ -41,7 +41,6 @@ chrome.runtime.onMessage.addListener(
     } else if (request.action == "history") {
       console.log(wholetext)
     }
-
   });
 
   function startRecognition() {
@@ -51,13 +50,13 @@ chrome.runtime.onMessage.addListener(
   function makeASentence(event) {
     var partialSentence = ""
     var totalSentence = ""
-    var newResults = []
+    var newResults = event.results
     var results = event.results
-    newResults = event.results
 
     for (i=0; i<results.length; i++) {
-      if (results[i][0].confidence > 0.8 ) {
+      if (results[i][0].confidence > 0.8 && results[i].isFinal ) {
         totalSentence += results[i][0].transcript
+        totalSentence += " "
       }
     }
 
@@ -72,7 +71,8 @@ chrome.runtime.onMessage.addListener(
       }
     }
 
-    wholetext = totalSentence
+    wholetext += totalSentence
+    
     return partialSentence
   }
 
