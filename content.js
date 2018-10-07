@@ -1,7 +1,7 @@
 var showMaxSpeeches = 10
-var wholetext = ""
+var wholeText = ""
 var recognition = new webkitSpeechRecognition();
-var isErrorHappen = false
+var isStopRecognized = false
 
 div = document.createElement('div');
 setDivStyle(div);
@@ -21,13 +21,18 @@ recognition.onspeechend = function() {
 }
 
 recognition.onend = function(event) {
-  if (!isErrorHappen) {
+  if (!isStopRecognized) {
     recognition.start();
+  } else {
+    recognition.stop()
+    if(document.body.contains(div)){
+      document.body.removeChild(div);
+    }
   }
 }
 
 recognition.onerror = function(event) {
-  isErrorHappen = true
+  isStopRecognized = true
   recognition.stop();
   console.log("error happens click to transcription again")
   console.log(event.error);
@@ -36,10 +41,17 @@ recognition.onerror = function(event) {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if (request.action == "generate"){
+    if (request.action == "transcription") {
+      console.log("teste transcription")
+      isStopRecognized = false
       startRecognition();
     } else if (request.action == "history") {
-      console.log(wholetext)
+      console.log("teste history")
+      console.log(wholeText)
+    } else if (request.action == "stop") {
+      console.log("teste stop")
+      isStopRecognized = true
+      recognition.stop();
     }
   });
 
@@ -71,7 +83,7 @@ chrome.runtime.onMessage.addListener(
       }
     }
 
-    wholetext += totalSentence
+    wholeText += totalSentence
     
     return partialSentence
   }
