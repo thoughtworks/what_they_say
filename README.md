@@ -1,5 +1,5 @@
 # Closed Captions Google Chrome
-====================
+
 
 ### This project is a closed caption on real time.
 
@@ -8,7 +8,6 @@
 We are using this to support people with disability
 
 ## Features
-====================
 
 Today we have 2 Features :
 
@@ -17,7 +16,6 @@ Today we have 2 Features :
 
 
 ## Instalation
-====================
 
 The official app is hosted on :
 https://chrome.google.com/webstore/detail/closed-captions/bgcmlahgdkcbpaecoepolbogkbgpmaod
