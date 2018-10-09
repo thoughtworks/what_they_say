@@ -42,14 +42,11 @@ recognition.onerror = function(event) {
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action == "transcription") {
-      console.log("teste transcription")
       isStopRecognized = false
       startRecognition();
     } else if (request.action == "history") {
-      console.log("teste history")
       console.log(wholeText)
     } else if (request.action == "stop") {
-      console.log("teste stop")
       isStopRecognized = true
       recognition.stop();
     }
