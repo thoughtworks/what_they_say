@@ -1,4 +1,4 @@
-var showMaxSpeeches = 2
+var showMaxSpeeches = 10
 var wholeText = ""
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
@@ -11,8 +11,13 @@ recognition.interimResults = true;
 recognition.lang = "pt-BR";
 
 recognition.onresult = function(event) { 
+  console.log("speech start")
   var sentence = makeASentence(event);
   makeClosedCaption(sentence)
+}
+
+recognition.onspeechend = function() {
+  console.log('Speech has stopped being detected');
 }
 
 recognition.onend = function(event) {
@@ -38,8 +43,6 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action == "transcription") {
       isStopRecognized = false
-      this.showMaxSpeeches = request.lines
-      console.log(showMaxSpeeches)
       startRecognition();
     } else if (request.action == "history") {
       console.log(wholeText)
