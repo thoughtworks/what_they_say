@@ -1,6 +1,8 @@
 # What They Say
 
-##Resume
+#hacktoberfest2018
+
+### Resume
 --------
 We are using real time closed caption to support people with disability
 --------
