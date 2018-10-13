@@ -19,7 +19,7 @@
   ["activeTab",
     "contextMenus"],
   "content_scripts": [{
-    "js": ["content.js"],
+    "js": ["content.js", "jspdf.js"],
     "matches": ["<all_urls>"],
     "all_frames": true
   }]
