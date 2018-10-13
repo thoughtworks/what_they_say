@@ -2,19 +2,23 @@ var showMaxSpeeches = 10
 var wholeText = ""
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
+var languagens = {
+  pt_br: 'pt-BR',
+  en_en: 'en-EN'
+};
 
 div = document.createElement('div');
 setDivStyle(div);
 
 recognition.continuous = false;
 recognition.interimResults = true;
-recognition.lang = "pt-BR";
+recognition.lang = languagens.pt_br;
 
 recognition.onresult = function(event) { 
   console.log("speech start")
   var sentence = makeASentence(event);
   makeClosedCaption(sentence)
-}
+} 
 
 recognition.onspeechend = function() {
   console.log('Speech has stopped being detected');
@@ -38,7 +42,6 @@ recognition.onerror = function(event) {
   console.log(event.error);
 }
 
-
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action == "transcription") {
@@ -50,59 +53,59 @@ chrome.runtime.onMessage.addListener(
       isStopRecognized = true
       recognition.stop();
     }
-  });
+});
 
-  function startRecognition() {
-    recognition.start();
-  }
+function startRecognition() {
+  recognition.start();
+}
 
-  function makeASentence(event) {
-    var partialSentence = ""
-    var totalSentence = ""
-    var newResults = event.results
-    var results = event.results
+function makeASentence(event) {
+  var partialSentence = ""
+  var totalSentence = ""
+  var newResults = event.results
+  var results = event.results
 
-    for (i=0; i<results.length; i++) {
-      if (results[i][0].confidence > 0.8 && results[i].isFinal ) {
-        totalSentence += results[i][0].transcript
-        totalSentence += " "
-      }
+  for (i=0; i<results.length; i++) {
+    if (results[i][0].confidence > 0.8 && results[i].isFinal ) {
+      totalSentence += results[i][0].transcript
+      totalSentence += " "
     }
+  }
 
-    if (newResults.length > showMaxSpeeches) {
-      var tempArray = Array.from(newResults)
-      newResults = tempArray.slice(newResults.length - 2, newResults.length)
+  if (newResults.length > showMaxSpeeches) {
+    var tempArray = Array.from(newResults)
+    newResults = tempArray.slice(newResults.length - 2, newResults.length)
+  }
+
+  for (i=0; i<newResults.length; i++) {
+    if (newResults[i][0].confidence > 0.8) {
+      partialSentence += newResults[i][0].transcript
     }
-
-    for (i=0; i<newResults.length; i++) {
-      if (newResults[i][0].confidence > 0.8) {
-        partialSentence += newResults[i][0].transcript
-      }
-    }
-
-    wholeText += totalSentence
-    
-    return partialSentence
   }
 
-  function makeClosedCaption(text) {
-    div.textContent = text;
-    document.body.appendChild(div);
-  }
+  wholeText += totalSentence
+  
+  return partialSentence
+}
 
-  function setDivStyle() {
-    div.style.bottom = '5%';
-    div.style.left = 0;
-    div.style.textAlign = 'center';
-    div.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    div.style.position = 'absolute';
-    div.style.color = 'rgba(255, 255, 255, 0.97)';
-    div.style.padding = '10px';
-    div.style.fontSize = '20px';
-    div.style.width = '50%';
-    div.style.transform = 'translate(50%)';
-    div.style.border = '2px solid white';
-    div.style.borderRadius = "5px";
-    div.style.zIndex= "10000";
-    div.style.fontFamily = "Arial";
-  }
+function makeClosedCaption(text) {
+  div.textContent = text;
+  document.body.appendChild(div);
+}
+
+function setDivStyle() {
+  div.style.bottom = '5%';
+  div.style.left = 0;
+  div.style.textAlign = 'center';
+  div.style.backgroundColor = 'rgba(0,0,0,0.8)';
+  div.style.position = 'absolute';
+  div.style.color = 'rgba(255, 255, 255, 0.97)';
+  div.style.padding = '10px';
+  div.style.fontSize = '20px';
+  div.style.width = '50%';
+  div.style.transform = 'translate(50%)';
+  div.style.border = '2px solid white';
+  div.style.borderRadius = "5px";
+  div.style.zIndex= "10000";
+  div.style.fontFamily = "Arial";
+}
