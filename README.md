@@ -1,7 +1,39 @@
 # Closed Captions Google Chrome
 
+### What is about it ? .
+This project is a real time closed caption, made to disability people but people withou disability can use to take notes.
 
-### This project is a closed caption on real time.
+We started this project with a reasearch of two friends on @Thougthworks
+
+They found this project https://github.com/charliegerard/speak-extension
+
+And we try to implemented something closer and more customized.
+
+Now we have a name : "What Thet Say" and people helping =)
+
+
+### What is our goal ? .
+
+We would like, that this extension help people with disability to watch talks, movies and whatever, in whole world, therefore we will be so happy =D
+
+### SoundFlower
+
+With the SoundFlower you can create a virtual drive that can be route your output audio to input audio. With this you can generating closed captions by your videos, hangouts, zoom, youtube and others
+
+Download here : https://code.google.com/archive/p/soundflower/downloads
+
+This is how your config must be to use routing audio with soundflower :
+
+https://ibb.co/fiQWUU
+https://ibb.co/fOYww9
+
+On MAC Use this native app to route :
+https://ibb.co/ied4G9
+
+On Windows : (In building..)
+
+---###---
+
 
 [<img src="https://lh3.googleusercontent.com/a_wRbnGSVXNPPtsz_7YfI-ZPRXGdSwZv3BF2Zy9O_5nN88ylixHqtwD_3h8EcJrNjylvWSRCdA=w640-h400-e365">](http://google.com.au/)
 
@@ -9,7 +41,7 @@ We are using this to support people with disability
 
 ## Features
 
-Today we have 2 Features :
+Nowadays we have 2 Features :
 
 1. Generate Closed Caption by Microphone
 2. Print on cosole that history of closed captions recorded
