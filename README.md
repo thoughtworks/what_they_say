@@ -58,7 +58,9 @@ Nowadays we have 2 Features :
 The official app is hosted on :
 https://chrome.google.com/webstore/detail/closed-captions/bgcmlahgdkcbpaecoepolbogkbgpmaod
 
-To install this clode repository you need : 
-* to open chrome://extension
-* active the developer mode
-* import this project unziped.
+To install this after download this ... :
+ 
+* Open on Google Chrome : chrome://extension
+* Active the developer mode
+* Import this project unziped.
+* use it.
