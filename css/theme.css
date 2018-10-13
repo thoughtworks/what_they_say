@@ -1,0 +1,56 @@
+body {
+    min-width: 300px;
+    padding: 10px 20px;
+}
+
+iframe {
+    visibility: hidden;
+}
+
+button {
+    width: 100%;
+    display: block;
+    margin: 10px 0px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #ccc;
+    text-align: left;
+    border: none;
+}
+
+button>.fa {
+    margin-right: 10px;
+}
+
+.start.active {
+    background: #7cb342;
+    color: white;
+}
+
+.start.active:hover {
+    background: #558b2f;
+}
+
+.stop.active {
+    background: #e53935;
+    color: white;
+}
+
+.stop.active:hover {
+    background: #c62828;
+}
+
+button:hover {
+    background: #bbb;
+}
+
+button:focus {
+    background: #bbb;
+    outline: none;
+}
+
+h2 {
+    margin: 0;
+}
