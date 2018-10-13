@@ -1,46 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            body {
-                min-width: 300px;
-                padding: 10px 20px;
-            }
-
-            iframe {
-                visibility: hidden;
-            }
-
-            button {
-                width: 100%;
-                display: block;
-                margin: 10px 0px;
-                padding: 10px 20px;
-                font-size: 1rem;
-                border-radius: 5px;
-                cursor: pointer;
-                background: #ccc;
-            }
-
-            button:hover {
-                background: #bbb;
-            }
-            button:focus {
-                background: #bbb;
-                outline: none;
-            }
-
-            h2{
-                margin: 0;
-            }
-        </style>
+        <link rel="stylesheet" href="/css/icons.css">
+        <link rel="stylesheet" href="/css/theme.css">
     </head>
     <body>
         <h2>What They Say</h2>
         <i>Version: 1.0.0</i>
-        <button type="button" id="transcription">Transcription</button>
-        <button type="button" id="history">History </button>
-        <button type="button" id="stop">Stop </button>
+        <button type="button" id="transcription" class="start"><i class="fa fa-closed-captioning"></i> Transcription</button>
+        <button type="button" id="stop" class="stop"><i class="fa fa-stop"></i> Stop</button>
+        <button type="button" id="history"><i class="fa fa-clock"></i> History</button>
         <script src="popup.js"></script>
         <iframe src="https://example.com" width="1px" height="1px" allow="geolocation; microphone; camera"></iframe>
         <p>This project is a real time closed caption, made to disability people but people withou disability can use to take notes.</p>
