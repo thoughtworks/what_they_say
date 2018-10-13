@@ -10,7 +10,7 @@ recognition.continuous = false;
 recognition.interimResults = true;
 recognition.lang = "pt-BR";
 
-recognition.onresult = function(event) { 
+recognition.onresult = function(event) {
   console.log("speech start")
   var sentence = makeASentence(event);
   makeClosedCaption(sentence)
@@ -46,6 +46,7 @@ chrome.runtime.onMessage.addListener(
       startRecognition();
     } else if (request.action == "history") {
       console.log(wholeText)
+      generatePDF();
     } else if (request.action == "stop") {
       isStopRecognized = true
       recognition.stop();
@@ -106,3 +107,30 @@ chrome.runtime.onMessage.addListener(
     div.style.zIndex= "10000";
     div.style.fontFamily = "Arial";
   }
+
+function generatePDF() {
+  var doc = new jsPDF('p', 'in', 'letter'),
+    sizes = [12, 16, 20],
+    fonts = [['Helvetica', '']],
+    font, size, lines,
+    margin = 0.5, // inches on a 8.5 x 11 inch sheet.
+    verticalOffset = margin
+
+
+  for (var i in fonts) {
+    if (fonts.hasOwnProperty(i)) {
+      font = fonts[i]
+      size = sizes[i]
+
+      lines = doc.setFont(font[0], font[1])
+        .setFontSize(size)
+        .splitTextToSize(wholeText, 7.5)
+
+      doc.text(0.5, verticalOffset + size / 72, lines)
+
+      verticalOffset += (lines.length + 0.5) * size / 72
+    }
+  }
+
+  doc.save('a4.pdf')
+} 
