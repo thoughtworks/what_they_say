@@ -19,4 +19,3 @@ function sendStopMessageTab() {
     chrome.tabs.sendMessage(tabs[0].id, {action: "stop"}, {});
   });
 }
-
