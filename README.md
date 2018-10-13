@@ -28,6 +28,7 @@ We would like, that this extension help people with disability to watch talks, m
 With the SoundFlower you can create a virtual drive that can be route your output audio to input audio. With this you can generating closed captions by your videos, hangouts, zoom, youtube and others
 
 Download here : https://code.google.com/archive/p/soundflower/downloads
+MAC : https://github.com/mattingalls/Soundflower/releases/download/2.0b2/Soundflower-2.0b2.dmg
 
 This is how your config must be to use routing audio with soundflower :
 
