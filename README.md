@@ -29,6 +29,7 @@ With the SoundFlower you can create a virtual drive that can be route your outpu
 
 Download here : https://code.google.com/archive/p/soundflower/downloads
 MAC : https://github.com/mattingalls/Soundflower/releases/download/2.0b2/Soundflower-2.0b2.dmg
+MAC : https://rogueamoeba.com/freebies/soundflower/
 
 This is how your config must be to use routing audio with soundflower :
 
