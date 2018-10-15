@@ -2,9 +2,10 @@ var showMaxSpeeches = 10
 var wholeText = ""
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
-var languagens = {
+var languages = {
   pt_br: 'pt-BR',
-  en_en: 'en-EN'
+  en_en: 'en-EN',
+  es_cl: 'es-CL'
 };
 
 div = document.createElement('div');
@@ -12,7 +13,7 @@ setDivStyle(div);
 
 recognition.continuous = false;
 recognition.interimResults = true;
-recognition.lang = languagens.pt_br;
+recognition.lang = languages.es_cl;
 
 recognition.onresult = function(event) {
   console.log("speech start")
