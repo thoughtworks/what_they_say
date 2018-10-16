@@ -11,9 +11,9 @@
     "default_popup": "popup.html"
   },
   "icons": {
-    "16": "dog16.png",
-    "48": "dog48.png",
-    "128": "dog128.png"
+    "16": "what16.png",
+    "48": "what48.png",
+    "128": "what128.png"
   },
   "permissions": 
   ["activeTab",
