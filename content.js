@@ -2,18 +2,14 @@ var showMaxSpeeches = 10
 var wholeText = ""
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
-var languages = {
-  pt_br: 'pt-BR',
-  en_en: 'en-EN',
-  es_cl: 'es-CL'
-};
+var languague = "pt-BR"
 
 div = document.createElement('div');
 setDivStyle(div);
 
 recognition.continuous = false;
 recognition.interimResults = true;
-recognition.lang = languages.es_cl;
+recognition.lang = languague;
 
 recognition.onresult = function(event) {
   console.log("speech start")
@@ -45,15 +41,17 @@ recognition.onerror = function(event) {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
+
     if (request.action == "transcription") {
       isStopRecognized = false
       startRecognition();
     } else if (request.action == "history") {
-      console.log(wholeText)
       generatePDF();
     } else if (request.action == "stop") {
       isStopRecognized = true
       recognition.stop();
+    } else if (request.language) {
+      recognition.lang = request.language;
     }
 });
 

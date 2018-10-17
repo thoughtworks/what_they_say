@@ -1,9 +1,10 @@
 var actionButton = document.getElementById('transcription');
+var language
+
 actionButton.onclick = sendMessageTab;
 
 var startTranscription = true
 document.getElementById('history').onclick = sendHistoryMessageTab;
-//document.getElementById('stop').onclick = sendStopMessageTab;
 
 
 function sendMessageTab() {
@@ -56,3 +57,15 @@ function sendStopMessageTab() {
     chrome.tabs.sendMessage(tabs[0].id, {action: "stop"}, {});
   });
 }
+
+function changeLanguage() {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {"language": language.value}, {});
+  });
+}
+
+
+window.addEventListener("DOMContentLoaded", function() {
+  language = document.getElementById('teste')
+  language.addEventListener("change", changeLanguage, false);
+}, false);
