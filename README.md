@@ -8,7 +8,7 @@ We are using real time closed caption to support people with disability hearing
 --------
 
 ### What is about it?
-This project is a real time closed caption made to disability people, but people without disability can use it to take notes.
+This project is a real time closed caption made to disability hearing people, but people without disability can use it to take notes.
 
 We started this project with a reasearch of two friends on @ThoughtWorks
 
