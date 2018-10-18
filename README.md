@@ -20,7 +20,7 @@ Now we have a name: "What Thet Say" and people helping =)
 
 ### What is our goal?
 
-We would like this extension help people with disability to watch talks, movies and whatever, in whole world, therefore we will be so happy =D
+We would like this extension help people with disability hearing to watch talks, movies and whatever, in whole world, therefore we will be so happy =D
 
 ### SoundFlower
 
