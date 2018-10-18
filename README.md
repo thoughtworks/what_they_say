@@ -4,13 +4,13 @@ We are on #hacktoberfest2018
 
 ### Resume
 --------
-We are using real time closed caption to support people with disability
+We are using real time closed caption to support people with disability deaf
 --------
 
 ### What is about it?
-This project is a real time closed caption made to disability people, but people without disability can use it to take notes.
+This project is a real time closed caption made to disability people, but people without disability deaf can use it to take notes.
 
-We started this project with a reasearch of two friends on @Thougthworks
+We started this project with a reasearch of two friends on @ThoughtWorks
 
 They found this project https://github.com/charliegerard/speak-extension
 
