@@ -71,7 +71,7 @@ h2 {
   
   .language-select-element:after{
     content: '<>';
-    font: 17px "Consolas", monospace;
+    font: 14px "Consolas", monospace;
     color: #333;
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
