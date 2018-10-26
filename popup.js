@@ -6,7 +6,7 @@ var startTranscription = true
 
 // - on load -
 
-actionButton.onclick = sendMessageTab;
+actionButton.onclick = sendStartStopTranscriptionMessageTab;
 document.getElementById('history').onclick = sendHistoryMessageTab;
 
 window.addEventListener("DOMContentLoaded", function() {
@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
 // - functions -
 
-function sendMessageTab() {
+function sendStartStopTranscriptionMessageTab() {
 
   if (startTranscription == false) {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -45,12 +45,6 @@ function sendHistoryMessageTab() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {action: "history"}, {});
     });
-}
-
-function sendStopMessageTab() {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, {action: "stop"}, {});
-  });
 }
 
 function changeLanguage() {
