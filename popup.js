@@ -1,11 +1,22 @@
+// - properties -
+
 var actionButton = document.getElementById('transcription');
 var language
+var startTranscription = true
+
+// - on load -
 
 actionButton.onclick = sendMessageTab;
-
-var startTranscription = true
 document.getElementById('history').onclick = sendHistoryMessageTab;
 
+window.addEventListener("DOMContentLoaded", function() {
+  language = document.getElementById('language-select')
+  language.addEventListener("change", changeLanguage, false)
+  loadButtonStatus()
+  getLanguageSelection()
+}, false);
+
+// - functions -
 
 function sendMessageTab() {
 
@@ -19,7 +30,6 @@ function sendMessageTab() {
       chrome.tabs.sendMessage(tabs[0].id, {action: "transcription"}, {});
     });
   }
-
 
   startTranscription = !startTranscription
   setTranscriptionButton()
@@ -101,11 +111,3 @@ function setTranscriptionButton() {
   actionButton.appendChild(i);
   actionButton.appendChild(text);
 }
-
-
-window.addEventListener("DOMContentLoaded", function() {
-  language = document.getElementById('teste')
-  language.addEventListener("change", changeLanguage, false)
-  loadButtonStatus()
-  getLanguageSelection()
-}, false);
