@@ -2,18 +2,18 @@
   "manifest_version": 2,
   "name": "What They Say",
   "description": "Generate your own closed captions with zoom",
-  "version": "1.4.9",
+  "version": "1.5.0",
   "author": "Jackson",
   "short_name": "CC",
   "browser_action": {
-    "default_icon": "what.png",
+    "default_icon": "wts_icon_67.png",
     "default_title": "Closed Captions",
     "default_popup": "popup.html"
   },
   "icons": {
-    "16": "what16.png",
-    "48": "what48.png",
-    "128": "what128.png"
+    "16": "wts_icon_16.png",
+    "48": "wts_icon_48.png",
+    "128": "wts_icon_128.png"
   },
   "permissions": 
   ["activeTab",
