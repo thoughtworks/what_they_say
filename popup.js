@@ -58,7 +58,7 @@ function saveClosedButtonStatus(status) {
   chrome.storage.local.set({"status": status}, function(){});
 }
 
-function getButtonStatus() {
+function getLanguageSelection() {
   chrome.storage.local.get(["language"], function(languageName){
       language.value = languageName.language
   });
@@ -107,4 +107,5 @@ window.addEventListener("DOMContentLoaded", function() {
   language = document.getElementById('teste')
   language.addEventListener("change", changeLanguage, false)
   loadButtonStatus()
+  getLanguageSelection()
 }, false);
