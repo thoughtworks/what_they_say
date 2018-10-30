@@ -1,6 +1,7 @@
 // - properties -
 
 var actionButton = document.getElementById('transcription');
+var version = document.getElementById('version')
 var language
 var startTranscription = true
 
@@ -10,6 +11,7 @@ actionButton.onclick = sendStartStopTranscriptionMessageTab;
 document.getElementById('history').onclick = sendHistoryMessageTab;
 
 window.addEventListener("DOMContentLoaded", function() {
+  version.textContent += chrome.runtime.getManifest().version
   language = document.getElementById('language-select')
   language.addEventListener("change", changeLanguage, false)
   loadButtonStatus()
