@@ -1,6 +1,5 @@
 //setup
 
-var showMaxSpeeches = 10
 var historyTranscription = ""
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
