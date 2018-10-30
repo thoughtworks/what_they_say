@@ -1,7 +1,7 @@
 //setup
 
 var showMaxSpeeches = 10
-var wholeText = ""
+var historyTranscription = ""
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
 var languague = getLanguageSelection()
@@ -10,10 +10,7 @@ var youtubeDiv = document.createElement('div');
 var isFullScreenYoutube = false
 var youtuberContainer
 
-
-recognition.continuous = false;
-recognition.interimResults = true;
-
+setupRecognition()
 setDivStyle();
 setYoutubeDivStyle()
 setLanguague()
@@ -43,6 +40,7 @@ chrome.runtime.onMessage.addListener(
 recognition.onresult = function(event) {
   console.log("speech start")
   var sentence = makeASentence(event);
+  addTranscriptionToHistory(event)
   makeClosedCaption(sentence)
 } 
 
@@ -55,12 +53,7 @@ recognition.onend = function(event) {
     startRecognition()
   } else {
     recognition.stop()
-    if(document.body.contains(div)){
-      document.body.removeChild(div);
-    }
-    if (youtuberContainer.contains(youtubeDiv)) {
-      youtuberContainer.removeChild(youtubeDiv)
-    }
+    removeTranscriptionContainer()
   }
 }
 
@@ -73,13 +66,17 @@ recognition.onerror = function(event) {
 
 //functions
 
+function setupRecognition() {
+  recognition.continuous = false;
+  recognition.interimResults = true;
+}
+
 function startRecognition() {
   setLanguague()
   recognition.start();
 }
 
-function makeASentence(event) {
-  var partialSentence = ""
+function addTranscriptionToHistory(event) {
   var totalSentence = ""
   var results = event.results
 
@@ -90,48 +87,31 @@ function makeASentence(event) {
     }
   }
 
+  historyTranscription += totalSentence
+}
+
+function makeASentence(event) {
+  var partialSentence = ""
+  var results = event.results
+
   for (i=0; i<results.length; i++) {
     if (results[i][0].confidence > 0.8) {
       partialSentence += results[i][0].transcript
     }
   }
 
-  wholeText += totalSentence
-  
   return partialSentence
 }
 
   function setDivStyle() {
-    div.style.bottom = '5%';
-    div.style.left = 0;
-    div.style.textAlign = 'center';
-    div.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    div.style.position = 'absolute';
-    div.style.color = 'rgba(255, 255, 255, 0.97)';
-    div.style.padding = '10px';
-    div.style.fontSize = '20px';
-    div.style.width = '50%';
-    div.style.transform = 'translate(50%)';
-    div.style.border = '2px solid white';
-    div.style.borderRadius = "5px";
-    div.style.zIndex= "10000";
-    div.style.fontFamily = "Arial";
+    div.classList.add("transcription-container");
   }
 
   function setYoutubeDivStyle() {
     var height = window.innerHeight * 0.9
+    youtubeDiv.classList.add("transcription-container");
+    youtubeDiv.classList.add("transcription-container-fullscreen");
     youtubeDiv.style.top = height.toString() + "px"
-    youtubeDiv.style.left = "5%";
-    youtubeDiv.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    youtubeDiv.style.position = 'absolute';
-    youtubeDiv.style.color = 'rgba(255, 255, 255, 0.97)';
-    youtubeDiv.style.fontSize = '20px';
-    youtubeDiv.style.width = '50%';
-    youtubeDiv.style.transform = 'translate(50%)';
-    youtubeDiv.style.border = '2px solid white';
-    youtubeDiv.style.borderRadius = "5px";
-    youtubeDiv.style.zIndex= "10000";
-    youtubeDiv.style.fontFamily = "Arial";
   }
 
 function generatePDF() {
@@ -150,7 +130,7 @@ function generatePDF() {
 
       lines = doc.setFont(font[0], font[1])
         .setFontSize(size)
-        .splitTextToSize(wholeText, 7.5)
+        .splitTextToSize(historyTranscription, 7.5)
 
       doc.text(0.5, verticalOffset + size / 72, lines)
 
@@ -180,8 +160,7 @@ function getLanguageSelection() {
 function enterFullScreenHandler() {
     if (document.webkitIsFullScreen === true) {
       isFullScreenYoutube = true
-    }
-    if (document.webkitIsFullScreen === false) {
+    } else if (document.webkitIsFullScreen === false) {
       isFullScreenYoutube = false
     }
 }
@@ -203,4 +182,13 @@ function setLanguague() {
     }
     recognition.lang = languague;
   });
+}
+
+function removeTranscriptionContainer() {
+  if(document.body.contains(div)) {
+    document.body.removeChild(div)
+  }
+  if (youtuberContainer && youtuberContainer.contains(youtubeDiv)) {
+    youtuberContainer.removeChild(youtubeDiv)
+  }
 }

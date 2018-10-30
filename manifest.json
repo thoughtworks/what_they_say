@@ -19,9 +19,11 @@
   ["activeTab",
     "contextMenus",
     "storage"],
+    
   "content_scripts": [{
     "js": ["content.js", "jspdf.js"],
     "matches": ["<all_urls>"],
+    "css":     ["css/theme.css"],
     "all_frames": true
   }]
 }
