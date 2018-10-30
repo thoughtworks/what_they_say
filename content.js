@@ -1,19 +1,44 @@
+//setup
+
 var showMaxSpeeches = 10
 var wholeText = ""
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
 var languague = getLanguageSelection()
+var div = document.createElement('div');
+var youtubeDiv = document.createElement('div');
+var isFullScreenYoutube = false
+var youtuberContainer
 
-div = document.createElement('div');
-setDivStyle(div);
 
 recognition.continuous = false;
 recognition.interimResults = true;
 
-if (languague) {
-  languague = "pt-BR"
-}
-recognition.lang = languague;
+setDivStyle();
+setYoutubeDivStyle()
+setLanguague()
+
+//listeners
+
+document.addEventListener('webkitfullscreenchange', enterFullScreenHandler, false);
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+
+    if (request.action == "transcription") {
+      isStopRecognized = false
+      startRecognition();
+    } else if (request.action == "history") {
+      generatePDF();
+    } else if (request.action == "stop") {
+      isStopRecognized = true
+      recognition.stop();
+    } else if (request.language) {
+      recognition.lang = request.language;
+    }
+});
+
+//callback recognition
 
 recognition.onresult = function(event) {
   console.log("speech start")
@@ -33,6 +58,9 @@ recognition.onend = function(event) {
     if(document.body.contains(div)){
       document.body.removeChild(div);
     }
+    if (youtuberContainer.contains(youtubeDiv)) {
+      youtuberContainer.removeChild(youtubeDiv)
+    }
   }
 }
 
@@ -43,22 +71,7 @@ recognition.onerror = function(event) {
   console.log(event.error);
 }
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-
-    if (request.action == "transcription") {
-      isStopRecognized = false
-      startRecognition();
-    } else if (request.action == "history") {
-      generatePDF();
-    } else if (request.action == "stop") {
-      isStopRecognized = true
-      recognition.stop();
-    } else if (request.language) {
-      recognition.lang = request.language;
-    }
-});
-
+//functions
 
 function startRecognition() {
   recognition.start();
@@ -104,12 +117,28 @@ function makeASentence(event) {
     div.style.fontFamily = "Arial";
   }
 
+  function setYoutubeDivStyle() {
+    var height = window.innerHeight * 0.9
+    youtubeDiv.style.top = height.toString() + "px"
+    youtubeDiv.style.left = "5%";
+    youtubeDiv.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    youtubeDiv.style.position = 'absolute';
+    youtubeDiv.style.color = 'rgba(255, 255, 255, 0.97)';
+    youtubeDiv.style.fontSize = '20px';
+    youtubeDiv.style.width = '50%';
+    youtubeDiv.style.transform = 'translate(50%)';
+    youtubeDiv.style.border = '2px solid white';
+    youtubeDiv.style.borderRadius = "5px";
+    youtubeDiv.style.zIndex= "10000";
+    youtubeDiv.style.fontFamily = "Arial";
+  }
+
 function generatePDF() {
   var doc = new jsPDF('p', 'in', 'letter'),
     sizes = [12, 16, 20],
     fonts = [['Helvetica', '']],
     font, size, lines,
-    margin = 0.5, // inches on a 8.5 x 11 inch sheet.
+    margin = 0.5, 
     verticalOffset = margin
 
 
@@ -127,18 +156,45 @@ function generatePDF() {
       verticalOffset += (lines.length + 0.5) * size / 72
     }
   }
-
   doc.save('a4.pdf')
 }
 
-
 function makeClosedCaption(text) {
   div.textContent = text;
-  document.body.appendChild(div);
+  youtubeDiv.textContent = text
+  if (isFullScreenYoutube) {
+    setYoutubeFullScreenCaptions()
+  } else {
+    document.body.appendChild(div);
+  }
 }
 
 function getLanguageSelection() {
   chrome.storage.local.get(["language"], function(languageName) {
       return languageName.language
   });
+}
+
+function enterFullScreenHandler() {
+    if (document.webkitIsFullScreen === true) {
+      isFullScreenYoutube = true
+    }
+    if (document.webkitIsFullScreen === false) {
+      isFullScreenYoutube = false
+    }
+}
+
+function setYoutubeFullScreenCaptions() {
+    youtuberContainer = document.getElementsByClassName("html5-video-container")
+
+    if (youtuberContainer) {
+      youtuberContainer[0].appendChild(youtubeDiv);
+    }
+}
+
+function setLanguague() {
+  if (languague) {
+    languague = "pt-BR"
+  }
+  recognition.lang = languague;
 }

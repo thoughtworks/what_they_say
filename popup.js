@@ -38,7 +38,6 @@ function sendStartStopTranscriptionMessageTab() {
   if (!startTranscription) {
     window.close();
   }
-  
 }
 
 function sendHistoryMessageTab() {
@@ -77,8 +76,7 @@ function loadButtonStatus() {
     }
     startTranscription = tempStatus
     setTranscriptionButton()
-});
-
+  });
 }
 
 function setTranscriptionButton() {
