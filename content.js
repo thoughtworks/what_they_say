@@ -52,7 +52,7 @@ recognition.onspeechend = function() {
 
 recognition.onend = function(event) {
   if (!isStopRecognized) {
-    recognition.start();
+    startRecognition()
   } else {
     recognition.stop()
     if(document.body.contains(div)){
@@ -74,6 +74,7 @@ recognition.onerror = function(event) {
 //functions
 
 function startRecognition() {
+  setLanguague()
   recognition.start();
 }
 
@@ -171,6 +172,7 @@ function makeClosedCaption(text) {
 
 function getLanguageSelection() {
   chrome.storage.local.get(["language"], function(languageName) {
+      console.log(languageName.language)
       return languageName.language
   });
 }
@@ -193,8 +195,12 @@ function setYoutubeFullScreenCaptions() {
 }
 
 function setLanguague() {
-  if (languague) {
-    languague = "pt-BR"
-  }
-  recognition.lang = languague;
+  chrome.storage.local.get(["language"], function(languageName) {
+    if (!languageName.language) {
+      languague = "pt-BR"
+    } else {
+      languague = languageName.language
+    }
+    recognition.lang = languague;
+  });
 }

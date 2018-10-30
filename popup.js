@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", function() {
   language = document.getElementById('language-select')
   language.addEventListener("change", changeLanguage, false)
   loadButtonStatus()
-  getLanguageSelection()
+  loadLanguageSelection()
 }, false);
 
 // - functions -
@@ -24,7 +24,6 @@ function sendStartStopTranscriptionMessageTab() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {action: "stop"}, {});
     });
-  
   } else {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {action: "transcription"}, {});
@@ -61,9 +60,10 @@ function saveClosedButtonStatus(status) {
   chrome.storage.local.set({"status": status}, function(){});
 }
 
-function getLanguageSelection() {
-  chrome.storage.local.get(["language"], function(languageName){
+function loadLanguageSelection() {
+  chrome.storage.local.get(["language"], function(languageName) {
       language.value = languageName.language
+      chrome.tabs.sendMessage(tabs[0].id, {"language": language.value}, {});
   });
 }
 
