@@ -9,10 +9,7 @@ var youtubeDiv = document.createElement('div');
 var isFullScreenYoutube = false
 var youtuberContainer
 
-setupRecognition()
-setDivStyle();
-setYoutubeDivStyle()
-setLanguague()
+setup()
 
 //listeners
 
@@ -64,6 +61,13 @@ recognition.onerror = function(event) {
 }
 
 //functions
+
+function setup() {
+  setupRecognition()
+  setDivStyle()
+  setYoutubeDivStyle()
+  setLanguague()
+}
 
 function setupRecognition() {
   recognition.continuous = false;
