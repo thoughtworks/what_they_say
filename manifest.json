@@ -15,15 +15,24 @@
     "48": "src/img/wts_icon_48.png",
     "128": "src/img/wts_icon_128.png"
   },
-  "permissions": 
-  ["activeTab",
+  "permissions": [
+    "activeTab",
     "contextMenus",
-    "storage"],
-    
-  "content_scripts": [{
-    "js": ["src/js/content.js", "src/js/jspdf.js"],
-    "matches": ["<all_urls>"],
-    "css":     ["src/css/theme.css"],
-    "all_frames": true
-  }]
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "src/js/content.js",
+        "src/js/jspdf.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "src/css/content.css"
+      ],
+      "all_frames": true
+    }
+  ]
 }

@@ -1,0 +1,32 @@
+.transcription-container {
+  bottom : 5%;
+  left : 0;
+  text-align : center;
+  background-color : rgba(0,0,0,0.8);
+  position :absolute;
+  color : rgba(255, 255, 255, 0.97);
+  padding : 10px;
+  font-size : 20px;
+  width : 50%;
+  transform : translate(50%);
+  border : 2px solid white;
+  border-radius: 5px;
+  z-index:  10000;
+  font-family:  "Arial";
+}
+
+.transcription-container-fullscreen {
+  bottom : 5%;
+  left : 0;
+  text-align : center;
+  background-color : transparent;
+  position :absolute;
+  color : rgba(255, 255, 255, 0.97);
+  padding : 10px;
+  font-size : 20px;
+  width : 50%;
+  transform : translate(50%);
+  border : none;
+  z-index:  10000;
+  font-family:  "Arial";
+}

@@ -59,7 +59,7 @@ h2 {
     position: relative;
     margin-bottom: 1em;
   }
-  
+
   select{
     border: 1px solid lightgrey;
     font-size: 12px;
@@ -68,7 +68,7 @@ h2 {
     padding: 1em;
     border: 1px solid #ccc;
   }
-  
+
   .language-select-element:after{
     content: '<>';
     font: 14px "Consolas", monospace;
@@ -82,37 +82,4 @@ h2 {
     border-bottom: 1px solid #999;
     position: absolute;
     pointer-events: none;
-  }
-
-  .transcription-container {
-    bottom : 5%;
-    left : 0;
-    text-align : center;
-    background-color : rgba(0,0,0,0.8);
-    position :absolute;
-    color : rgba(255, 255, 255, 0.97);
-    padding : 10px;
-    font-size : 20px;
-    width : 50%;
-    transform : translate(50%);
-    border : 2px solid white;
-    border-radius: 5px;
-    z-index:  10000;
-    font-family:  "Arial";
-  }
-
-  .transcription-container-fullscreen {
-    bottom : 5%;
-    left : 0;
-    text-align : center;
-    background-color : transparent;
-    position :absolute;
-    color : rgba(255, 255, 255, 0.97);
-    padding : 10px;
-    font-size : 20px;
-    width : 50%;
-    transform : translate(50%);
-    border : none;
-    z-index:  10000;
-    font-family:  "Arial";
   }
