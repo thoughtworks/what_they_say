@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
     copy: {
       main: {
         files: [
@@ -19,26 +20,37 @@ module.exports = function(grunt) {
         commit: true,
         commitMessage: 'Release v%VERSION%',
         commitFiles: ['manifest.json'],
-        createTag: true,
+        createTag: false,
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
         push: true,
-        pushTo: 'upstream',
+        pushTo: 'origin',
         gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
         globalReplace: false,
         prereleaseName: false,
         metadata: '',
         regExp: false
       }
+    },
+    compress: {
+      main: {
+        options: {
+          archive: 'build.zip'
+        },
+        files: [
+          {src: ['dest/**'], dest: '/'}, // includes files in path and its subdirs
+        ]
+      }
     }
+    
   });
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-bump');
-
+  grunt.loadNpmTasks('grunt-contrib-compress');
 
   // Default task(s).
-  grunt.registerTask('default');
+  grunt.registerTask('build', ['bump','copy','compress']);
 
 };
