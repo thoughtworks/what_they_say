@@ -61,7 +61,7 @@ The official app is hosted on Google Webstore:
 
 To install this after download this:
  
-* Open on Google Chrome: chrome://extension
+* Open on Google Chrome: chrome://extensions
 * Active the developer mode
 * Import this project unziped
 * Use it
