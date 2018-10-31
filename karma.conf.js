@@ -21,6 +21,7 @@ module.exports = function(config) {
       dir : 'coverage/'
     },
     port: 9876,
+    singleRun: true,
     colors: true,
     logLevel: config.LOG_INFO,
     concurrency: Infinity
