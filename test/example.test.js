@@ -1,8 +1,10 @@
+describe('Should not be continuos', () => { 
+	it('continous should be false', () => { 
+		
+		var recognition = new webkitSpeechRecognition();
+		setupRecognition(recognition)
 
-
-describe('Hello world', () => { 
-	it('says hello', () => { 
-	  expect(helloWorld()) 
-		  .toEqual('Hello world!'); 
-	});
-  });
+	  expect(recognition.continuous) 
+		  .toEqual(false); 
+		});
+});

@@ -3,9 +3,8 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
     browsers: ['ChromeHeadless'],
     files: [
+      'src/js/recognition.js',
       'test/*.js',
-    //   'content.js',
-    //   'popup.js'
     ],
     port: 9876,
     colors: true,

@@ -1,3 +1,4 @@
+
 //setup
 
 var historyTranscription = ""
@@ -63,15 +64,10 @@ recognition.onerror = function(event) {
 //functions
 
 function setup() {
-  setupRecognition()
+  setupRecognition(recognition)
   setDivStyle()
   setYoutubeDivStyle()
   setLanguague()
-}
-
-function setupRecognition() {
-  recognition.continuous = false;
-  recognition.interimResults = true;
 }
 
 function startRecognition() {
