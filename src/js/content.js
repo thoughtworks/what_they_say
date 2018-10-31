@@ -20,7 +20,7 @@ document.addEventListener('webkitfullscreenchange', setFullScreenHandler, false)
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
 
-    if (request.action == "transcription") {
+    if (request.action == "start") {
       isStopRecognized = false
       startRecognition();
     } else if (request.action == "history") {
@@ -148,7 +148,6 @@ function makeClosedCaption(text) {
 
 function getLanguageSelection() {
   chrome.storage.local.get(["language"], function(languageName) {
-      console.log(languageName.language)
       return languageName.language
   });
 }

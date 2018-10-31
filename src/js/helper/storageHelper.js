@@ -6,4 +6,10 @@ class LocalStorage {
     save(data,callback) {
         return this.database.storage.local.set(data, callback());;
     }
+
+    get (key,callback) {
+        this.database.storage.local.get([key], function(key) {
+            return callback(key)
+          });
+    }
 }

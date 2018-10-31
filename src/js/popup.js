@@ -3,88 +3,46 @@
 var actionButton = document.getElementById('transcription');
 var version = document.getElementById('version')
 var languageSelectBox
-var startTranscription = true
 const localStorage = new LocalStorage(chrome)
 const language = new Language("")
+var transcriptionButton = new TranscriptionButtonStatus()
 
 // - on load -
 
-actionButton.onclick = sendStartStopTranscriptionMessageTab;
+actionButton.onclick = didTapTranscriptionButton;
 document.getElementById('history').onclick = sendHistoryMessageTab;
 
 window.addEventListener("DOMContentLoaded", function() {
+  viewLoadSetup()
+}, false);
+
+// - functions -
+
+function viewLoadSetup() {
   version.textContent += chrome.runtime.getManifest().version
   languageSelectBox = document.getElementById('language-select')
   languageSelectBox.addEventListener("change", changeLanguage, false)
   loadButtonStatus()
   loadLanguageSelection()
-}, false);
-
-// - functions -
-
-function sendStartStopTranscriptionMessageTab() {
-
-  if (startTranscription == false) {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {action: "stop"}, {});
-    });
-  } else {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {action: "transcription"}, {});
-    });
-  }
-
-  startTranscription = !startTranscription
-  setTranscriptionButton()
-  saveClosedButtonStatus(startTranscription)
-  
-  if (!startTranscription) {
-    window.close();
-  }
-}
-
-function sendHistoryMessageTab() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {action: "history"}, {});
-    });
-}
-
-function changeLanguage() {
-  language.language = languageSelectBox.value
-  saveLanguageStatus(language)
-}
-
-function saveLanguageStatus(language) {
-  localStorage.save(language, function(){})
-}
-
-function saveClosedButtonStatus(status) {
-  chrome.storage.local.set({"status": status}, function(){});
 }
 
 function loadLanguageSelection() {
-  chrome.storage.local.get(["language"], function(language) {
-    console.log(language)
-      languageSelectBox.value = language.language
-  });
+  localStorage.get("language", function(language) {
+    languageSelectBox.value = language.language
+  })
 }
 
 function loadButtonStatus() {
-  chrome.storage.local.get(["status"], function(status) {
-    var tempStatus = false
-
-    if (status) {
-      tempStatus = status.status
-    }
-    startTranscription = tempStatus
-    setTranscriptionButton()
-  });
+  localStorage.get("action", function(response) {
+    transcriptionButton.action =  response.action == null ? true : response.action
+    setTranscriptionButtonSkin()
+  })
 }
 
-function setTranscriptionButton() {
+function setTranscriptionButtonSkin() {
   var i,text,iclass
 
-  if (!startTranscription) {
+  if (!transcriptionButton.action) {
     actionButton.textContent = ""
     actionButton.className = "stop"
     
@@ -104,4 +62,52 @@ function setTranscriptionButton() {
 
   actionButton.appendChild(i);
   actionButton.appendChild(text);
+}
+
+function didTapTranscriptionButton() {
+  sendStartStopTranscriptionMessageContent()
+  updateTranscriptionButton()
+  closePopUpIfTranscriptionClicked()
+}
+
+function sendStartStopTranscriptionMessageContent() {
+  var action =  getMessageActionButton()
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {"action" : action}, {});
+    });
+}
+
+function getMessageActionButton() {
+  return transcriptionButton.action ? "start" : "stop"
+}
+
+function updateTranscriptionButton() {
+  transcriptionButton.action = !transcriptionButton.action
+  setTranscriptionButtonSkin()
+  saveTranscriptionButtonAction()
+}
+
+function closePopUpIfTranscriptionClicked() {
+  if (!transcriptionButton.action) {
+    window.close();
+   }
+}
+
+function sendHistoryMessageTab() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {action: "history"}, {});
+    });
+}
+
+function changeLanguage() {
+  language.language = languageSelectBox.value
+  saveLanguageStatus(language)
+}
+
+function saveLanguageStatus(language) {
+  localStorage.save(language, function(){})
+}
+
+function saveTranscriptionButtonAction() {
+  localStorage.save(transcriptionButton, function(){})
 }
