@@ -1,5 +1,7 @@
 # What They Say
 
+[![Build Status](https://travis-ci.org/3jacksonsmith/what_they_say.svg?branch=master)](https://travis-ci.org/3jacksonsmith/what_they_say)
+
 We are on #hacktoberfest2018
 
 ### Resume
