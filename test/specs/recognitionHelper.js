@@ -7,7 +7,7 @@ describe('Should not be continuos', () => {
 		  .toEqual(recognition.continuous); 
 		});
 
-		it('interim Results should be true', () => { 
+		it('interim Results should be true', () => {
 			var recognition = new webkitSpeechRecognition();
 			setupRecognition(recognition)
 			expect(true) 

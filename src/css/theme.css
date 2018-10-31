@@ -3,11 +3,13 @@ body {
     padding: 10px 20px;
 }
 
-iframe {
+#iframe {
     visibility: hidden;
 }
 
-button {
+/* duplication TODO don't work class only ID */
+
+#transcription {
     width: 100%;
     display: block;
     margin: 10px 0px;
@@ -20,9 +22,46 @@ button {
     border: none;
 }
 
-button>.fa {
+#transcription>.fa {
     margin-right: 10px;
 }
+
+#transcription:hover {
+    background: #bbb;
+}
+
+#transcription:focus {
+    background: #bbb;
+    outline: none;
+}
+
+#history {
+    width: 100%;
+    display: block;
+    margin: 10px 0px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #ccc;
+    text-align: left;
+    border: none;
+}
+
+#history>.fa {
+    margin-right: 10px;
+}
+
+#history:hover {
+    background: #bbb;
+}
+
+#history:focus {
+    background: #bbb;
+    outline: none;
+}
+
+/*  */
 
 .start.active {
     background: #7cb342;
@@ -42,16 +81,7 @@ button>.fa {
     background: #c62828;
 }
 
-button:hover {
-    background: #bbb;
-}
-
-button:focus {
-    background: #bbb;
-    outline: none;
-}
-
-h2 {
+.title-version {
     margin: 0;
 }
 
@@ -60,7 +90,7 @@ h2 {
     margin-bottom: 1em;
   }
   
-  select{
+  .language-select{
     border: 1px solid lightgrey;
     font-size: 12px;
     -webkit-appearance: none;
