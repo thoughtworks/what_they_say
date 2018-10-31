@@ -12,7 +12,7 @@ This project is a real time closed caption made to disability hearing people, bu
 
 We started this project with a reasearch of two friends deaf on [ThoughtWorks](https://www.thoughtworks.com/)
 
-They found the project [speak-extension](https://github.com/charliegerard/speak-extension) by Chalie Gerard and we tried to implement something closer and more customized.
+They found the project [speak-extension](https://github.com/charliegerard/speak-extension) by Charlie Gerard and we tried to implement something closer and more customized.
 
 Now we have a name: "What Thet Say" and people helping =)
 
@@ -54,7 +54,7 @@ Nowadays we have 2 Features:
 2. Print on console the history of closed captions recorded
 
 
-## Instalation
+## Installation
 
 The official app is hosted on Google Webstore:
 - https://chrome.google.com/webstore/detail/closed-captions/bgcmlahgdkcbpaecoepolbogkbgpmaod
