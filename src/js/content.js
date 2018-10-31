@@ -6,14 +6,16 @@ var isStopRecognized = false
 var languague = getLanguageSelection()
 var div = document.createElement('div');
 var youtubeDiv = document.createElement('div');
-var isFullScreenYoutube = false
+var isFullScreen = false
 var youtuberContainer
+
+const transcriptionClass = "transcription-container"
 
 setup()
 
 //listeners
 
-document.addEventListener('webkitfullscreenchange', enterFullScreenHandler, false);
+document.addEventListener('webkitfullscreenchange', setFullScreenHandler, false);
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -64,7 +66,7 @@ recognition.onerror = function(event) {
 
 function setup() {
   setupRecognition(recognition)
-  setDivStyle()
+  addClass(div,transcriptionClass)
   setYoutubeDivStyle()
   setLanguague()
 }
@@ -100,10 +102,6 @@ function makeASentence(event) {
 
   return partialSentence
 }
-
-  function setDivStyle() {
-    div.classList.add("transcription-container");
-  }
 
   function setYoutubeDivStyle() {
     var height = window.innerHeight * 0.9
@@ -141,7 +139,7 @@ function generatePDF() {
 function makeClosedCaption(text) {
   div.textContent = text;
   youtubeDiv.textContent = text
-  if (isFullScreenYoutube) {
+  if (isFullScreen) {
     setYoutubeFullScreenCaptions()
   } else {
     document.body.appendChild(div);
@@ -155,11 +153,11 @@ function getLanguageSelection() {
   });
 }
 
-function enterFullScreenHandler() {
+function setFullScreenHandler() {
     if (document.webkitIsFullScreen === true) {
-      isFullScreenYoutube = true
+      isFullScreen = true
     } else if (document.webkitIsFullScreen === false) {
-      isFullScreenYoutube = false
+      isFullScreen = false
     }
 }
 
@@ -173,12 +171,7 @@ function setYoutubeFullScreenCaptions() {
 
 function setLanguague() {
   chrome.storage.local.get(["language"], function(languageName) {
-    if (!languageName.language) {
-      languague = "pt-BR"
-    } else {
-      languague = languageName.language
-    }
-    recognition.lang = languague;
+    recognition.lang = getCurrentLanguague(languageName.language);
   });
 }
 
