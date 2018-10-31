@@ -23,6 +23,11 @@
   "content_scripts": [
     {
       "js": [
+        "src/js/helper/storageHelper.js",
+        "src/js/model/language.js",
+        "src/js/helper/recognitionHelper.js",
+        "src/js/helper/storageHelper.js",
+         "src/js/helper/contentHelper.js",
         "src/js/content.js",
         "src/js/jspdf.js"
       ],

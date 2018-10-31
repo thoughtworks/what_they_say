@@ -2,8 +2,10 @@
 
 var actionButton = document.getElementById('transcription');
 var version = document.getElementById('version')
-var language
+var languageSelectBox
 var startTranscription = true
+const localStorage = new LocalStorage(chrome)
+const language = new Language("")
 
 // - on load -
 
@@ -12,8 +14,8 @@ document.getElementById('history').onclick = sendHistoryMessageTab;
 
 window.addEventListener("DOMContentLoaded", function() {
   version.textContent += chrome.runtime.getManifest().version
-  language = document.getElementById('language-select')
-  language.addEventListener("change", changeLanguage, false)
+  languageSelectBox = document.getElementById('language-select')
+  languageSelectBox.addEventListener("change", changeLanguage, false)
   loadButtonStatus()
   loadLanguageSelection()
 }, false);
@@ -48,14 +50,12 @@ function sendHistoryMessageTab() {
 }
 
 function changeLanguage() {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, {"language": language.value}, {});
-    saveLanguageStatus(language)
-  });
+  language.language = languageSelectBox.value
+  saveLanguageStatus(language)
 }
 
 function saveLanguageStatus(language) {
-  chrome.storage.local.set({ "language": language.value }, function(){});
+  localStorage.save(language, function(){})
 }
 
 function saveClosedButtonStatus(status) {
@@ -63,8 +63,9 @@ function saveClosedButtonStatus(status) {
 }
 
 function loadLanguageSelection() {
-  chrome.storage.local.get(["language"], function(languageName) {
-      language.value = languageName.language
+  chrome.storage.local.get(["language"], function(language) {
+    console.log(language)
+      languageSelectBox.value = language.language
   });
 }
 

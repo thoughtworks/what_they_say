@@ -3,6 +3,7 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
     browsers: ['ChromeHeadless'],
     files: [
+      'src/js/model/*.js',
       'src/js/helper/*.js',
       'test/specs/*.js'
     ],
