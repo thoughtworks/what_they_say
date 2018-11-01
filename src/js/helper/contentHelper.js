@@ -41,7 +41,20 @@ function getCurrentLanguague(language) {
  }
 
  function groupInterimTranscription(last, actual) {
-   var interceptionPoint = getInterceptionWordBeetweenTwoInterimTranscription(last, actual)
+  var interceptionPoint = getInterceptionWordBeetweenTwoInterimTranscription(last, actual)
+
+  if (wordCount(last) == wordCount(actual) + 1) {
+    return last
+  }
+
+  if (last == actual) {
+    return last
+  }
+
+   if (interceptionPoint.word == undefined ) {
+     return last + " " + actual
+   }
+
    return last + actual.slice(interceptionPoint.positionEnd, actual.length)
  }
 
@@ -50,7 +63,7 @@ function getCurrentLanguague(language) {
    var quantitySecondWord = wordCount(second)
    var lastWordFirstTranscription = getWordAtPosition(first, quantityFirstWord).word
 
-   for (i = 1; i <= quantitySecondWord; i ++) {
+   for (i = quantitySecondWord; i >= 1; i --) {
      if (lastWordFirstTranscription == getWordAtPosition(second, i).word) {
           return getWordAtPosition(second,i)
      }

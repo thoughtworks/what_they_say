@@ -167,11 +167,102 @@ describe('Content Functions tests', () => {
 
 			it('should group two interim transcription in one without repeat words', () => {
 				var lastTranscription = "toca raul eu estou muito feliz que você veio"
-				var actualTranscription = "veio para o nosso aniversário "
+				var actualTranscription = "toca raul eu estou muito feliz que você veio para o nosso aniversário "
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
 				expect("toca raul eu estou muito feliz que você veio para o nosso aniversário ") 
+					.toEqual(finalTranscription); 
+			});
+
+			it('should group two interim transcription in one without repeat words', () => {
+				var lastTranscription = "toca raul eu estou muito feliz que você veio"
+				var actualTranscription = "toca raul eu estou muito feliz que você veio"
+
+				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+
+				expect("toca raul eu estou muito feliz que você veio") 
+					.toEqual(finalTranscription); 
+			});
+
+			it('should group two interim transcription in one without repeat words', () => {
+				var lastTranscription = "vídeo sobre o som do th em inglês th"
+				var actualTranscription = "vídeo sobre o som do th em inglês"
+
+				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+
+				expect("vídeo sobre o som do th em inglês th") 
+					.toEqual(finalTranscription); 
+			});
+
+
+			it('should group two interim transcription in one without repeat words', () => {
+				var lastTranscription = "macaco louco eu sou louco nos vídeos que eu ganho"
+				var actualTranscription = "apresente um vídeo com as pessoas"
+
+				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+
+				expect("macaco louco eu sou louco nos vídeos que eu ganho apresente um vídeo com as pessoas") 
+					.toEqual(finalTranscription); 
+			});
+
+			it('should group two interim transcription in one without repeat words', () => {
+				var lastTranscription = "vídeo sobre o som do th em inglês eu falei que era um"
+				var actualTranscription = "vídeo sobre o som do th em inglês eu falei que era"
+
+				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+
+				expect("vídeo sobre o som do th em inglês eu falei que era um") 
+					.toEqual(finalTranscription); 
+			});
+
+			it('should group two interim transcription in one without repeat words', () => {
+				var lastTranscription = "Entra lá e já paga"
+				var actualTranscription = "Entra lá e já paga a sua conta e"
+
+				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+
+				expect("Entra lá e já paga a sua conta e") 
+					.toEqual(finalTranscription); 
+			});
+
+			it('should group two interim transcription in one without repeat words', () => {
+				var lastTranscription = "Entra lá e já paga a sua conta e"
+				var actualTranscription = "Entra lá e já paga a sua conta e"
+
+				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+
+				expect("Entra lá e já paga a sua conta e") 
+					.toEqual(finalTranscription); 
+			});
+
+			it('should group two interim transcription in one without repeat words', () => {
+				var lastTranscription = "o apoio da modalmais que é dtvm seja uma corretora de valores"
+				
+				var actualTranscription = "o apoio da modalmais que é dtvm seja uma corretora de valores que"
+
+				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+
+				expect("o apoio da modalmais que é dtvm seja uma corretora de valores que") 
+					.toEqual(finalTranscription); 
+			});
+
+			it('should group two interim transcription in one without repeat words', () => {
+				var lastTranscription = "Azul Brasil que jogaram Azul Brasil "
+				+ "          parar de ser trouxa e deixar Roubar o seu   receba tem o apoio da modalmais que é      "
+				+ "valores que apoia ou me poupe na      você tá precisando de dinheiro investido para poder realizar "
+				+ "os seus sonhos comprar seu carro        já o mundo você precisa investir melhor esse dinheiro e com "
+				+ "esse dinheiro e com esse"
+				
+				var actualTranscription = "já o mundo você precisa investir melhor esse dinheiro e com esse vídeo"
+
+				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+
+				expect("Azul Brasil que jogaram Azul Brasil "
+				+ "          parar de ser trouxa e deixar Roubar o seu   receba tem o apoio da modalmais que é      "
+				+ "valores que apoia ou me poupe na      você tá precisando de dinheiro investido para poder realizar "
+				+ "os seus sonhos comprar seu carro        já o mundo você precisa investir melhor esse dinheiro e com "
+				+ "esse dinheiro e com esse vídeo") 
 					.toEqual(finalTranscription); 
 			});
 });

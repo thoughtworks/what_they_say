@@ -8,6 +8,7 @@ var div = document.createElement('div');
 var youtubeDiv = document.createElement('div');
 var isFullScreen = false
 var youtuberContainer
+var lastTranscription = ""
 
 const transcriptionClass = "transcription-container"
 
@@ -48,6 +49,7 @@ recognition.onspeechend = function() {
 
 recognition.onend = function(event) {
   if (!isStopRecognized) {
+    // lastTranscription = ""
     startRecognition()
   } else {
     recognition.stop()
@@ -95,8 +97,11 @@ function makeASentence(event) {
   var results = event.results
 
   for (i=0; i<results.length; i++) {
-    if (results[i][0].confidence > 0.8) {
+    if (results[i][0].confidence > 0.8 && !results[i].isFinal) {
       partialSentence += results[i][0].transcript
+      if (results[i].isFinal) {
+        console.log("é final")
+      }
     }
   }
 
@@ -137,12 +142,14 @@ function generatePDF() {
 }
 
 function makeClosedCaption(text) {
-  div.textContent = text;
-  youtubeDiv.textContent = text
-  if (isFullScreen) {
-    setYoutubeFullScreenCaptions()
+    console.log(text)
+  if (document.body.contains(div)) {
+    lastTranscription = div.textContent
+    var newTranscription = groupInterimTranscription(lastTranscription, text)
+    div.textContent = newTranscription;
   } else {
-    document.body.appendChild(div);
+    div.textContent = text
+    document.body.appendChild(div)
   }
 }
 
@@ -175,10 +182,10 @@ function setLanguague() {
 }
 
 function removeTranscriptionContainer() {
-  if(document.body.contains(div)) {
-    document.body.removeChild(div)
-  }
-  if (youtuberContainer && youtuberContainer.contains(youtubeDiv)) {
-    youtuberContainer.removeChild(youtubeDiv)
-  }
+  // if(document.body.contains(div)) {
+  //   document.body.removeChild(div)
+  // }
+  // if (youtuberContainer && youtuberContainer.contains(youtubeDiv)) {
+  //   youtuberContainer.removeChild(youtubeDiv)
+  // }
 }
