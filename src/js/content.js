@@ -53,7 +53,6 @@ recognition.onend = function(event) {
     startRecognition()
   } else {
     recognition.stop()
-    removeTranscriptionContainer()
   }
 }
 
@@ -99,9 +98,6 @@ function makeASentence(event) {
   for (i=0; i<results.length; i++) {
     if (results[i][0].confidence > 0.8 && !results[i].isFinal) {
       partialSentence += results[i][0].transcript
-      if (results[i].isFinal) {
-        console.log("é final")
-      }
     }
   }
 
@@ -147,6 +143,12 @@ function makeClosedCaption(text) {
     lastTranscription = div.textContent
     var newTranscription = groupInterimTranscription(lastTranscription, text)
     div.textContent = newTranscription;
+
+    if (div.scrollHeight > div.offsetHeight) {
+      div.scrollTop += 20 
+    }
+
+
   } else {
     div.textContent = text
     document.body.appendChild(div)
@@ -179,13 +181,4 @@ function setLanguague() {
   chrome.storage.local.get(["language"], function(languageName) {
     recognition.lang = getCurrentLanguague(languageName.language);
   });
-}
-
-function removeTranscriptionContainer() {
-  // if(document.body.contains(div)) {
-  //   document.body.removeChild(div)
-  // }
-  // if (youtuberContainer && youtuberContainer.contains(youtubeDiv)) {
-  //   youtuberContainer.removeChild(youtubeDiv)
-  // }
 }

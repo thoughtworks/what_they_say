@@ -1,7 +1,9 @@
 .transcription-container {
+  height: 40px;
+  overflow-y: scroll;
   bottom : 5%;
   left : 0;
-  text-align : center;
+  text-align : left;
   background-color : rgba(0,0,0,0.8);
   position :absolute;
   color : rgba(255, 255, 255, 0.97);
@@ -18,7 +20,7 @@
 .transcription-container-fullscreen {
   bottom : 5%;
   left : 0;
-  text-align : center;
+  text-align : left;
   background-color : transparent;
   position :absolute;
   color : rgba(255, 255, 255, 0.97);
