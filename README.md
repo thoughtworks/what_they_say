@@ -4,6 +4,7 @@
 
 We are on #hacktoberfest2018
 
+--------
 ### DOWNLOAD STABLE VERSION
 
 The app is hosted on Google Webstore:
