@@ -4,6 +4,14 @@
 
 We are on #hacktoberfest2018
 
+### DOWNLOAD STABLE VERSION
+
+The app is hosted on Google Webstore:
+- https://chrome.google.com/webstore/detail/closed-captions/bgcmlahgdkcbpaecoepolbogkbgpmaod
+
+Please if you can download and give feedback/comment for us =D
+
+
 ### Resume
 --------
 We are using real time closed caption to support people with disability hearing
@@ -58,10 +66,7 @@ Nowadays we have 2 Features:
 
 ## Instalation
 
-The official app is hosted on Google Webstore:
-- https://chrome.google.com/webstore/detail/closed-captions/bgcmlahgdkcbpaecoepolbogkbgpmaod
-
-To install this after download this:
+To use the developer code you must download ou clone this coee, after this:
  
 * Open on Google Chrome: chrome://extensions
 * Active the developer mode
