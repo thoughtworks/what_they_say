@@ -265,4 +265,33 @@ describe('Content Functions tests', () => {
 				+ "esse dinheiro e com esse vídeo") 
 					.toEqual(finalTranscription); 
 			});
+
+			            it('should have the same words', () => {
+				                var lastTranscription = "mas e nao tem nada que hoje eu vou"
+				                var actualTranscription = "hoje eu vou"
+				
+				                var result = isTheSameTranscription(lastTranscription,actualTranscription)
+				                console.log(result)
+				
+				                expect(result).toEqual(true)
+				            });
+				
+				            it('should have not the same words', () => {
+				                var lastTranscription = "A gente estava nessa luta mano a mano contra o kaidou até que o mano deu apenas um hit"
+				                var actualTranscription = "Que loucura mano é muita confusão e muito hit mano"
+				
+				                var result = isTheSameTranscription(lastTranscription, actualTranscription)
+				
+				                expect(result).toEqual(false)
+				            });
+				
+				            it('should group two diffenrent interim transcription', () => {
+				                var lastTranscription = "A gente estava nessa luta mano a mano contra o kaidou até que o mano deu apenas um hit"
+				                var actualTranscription = "Que loucura mano é muita confusão e muito hit mano"
+				
+				                var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+				
+				                expect("A gente estava nessa luta mano a mano contra o kaidou até que o mano deu apenas um hit Que loucura mano é muita confusão e muito hit mano") 
+				                    .toEqual(finalTranscription); 
+				            });
 });
