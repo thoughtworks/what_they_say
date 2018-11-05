@@ -1,6 +1,5 @@
 //setup
 
-var historyTranscription = ""
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
 var languague = getLanguageSelection()
@@ -9,6 +8,7 @@ var youtubeDiv = document.createElement('div');
 var isFullScreen = false
 var youtuberContainer
 var lastTranscription = ""
+var wtkRecognition
 
 const transcriptionClass = "transcription-container"
 
@@ -38,9 +38,12 @@ chrome.runtime.onMessage.addListener(
 
 recognition.onresult = function(event) {
   console.log("speech start")
-  var sentence = makeASentence(event);
-  addTranscriptionToHistory(event)
-  makeClosedCaption(sentence)
+
+  if (!wtkRecognition ) {
+    wtkRecognition = new WTKRecognition()
+  }
+
+  makeClosedCaption(wtkRecognition.makeASentenceAndPutOnHistory(event))
 } 
 
 recognition.onspeechend = function() {
@@ -49,7 +52,6 @@ recognition.onspeechend = function() {
 
 recognition.onend = function(event) {
   if (!isStopRecognized) {
-    // lastTranscription = ""
     startRecognition()
   } else {
     recognition.stop()
@@ -66,6 +68,7 @@ recognition.onerror = function(event) {
 //functions
 
 function setup() {
+  addJsModule()
   setupRecognition(recognition)
   addClass(div,transcriptionClass)
   setYoutubeDivStyle()
@@ -77,34 +80,7 @@ function startRecognition() {
   recognition.start();
 }
 
-function addTranscriptionToHistory(event) {
-  var totalSentence = ""
-  var results = event.results
-
-  for (i=0; i<results.length; i++) {
-    if (results[i][0].confidence > 0.8 && results[i].isFinal ) {
-      totalSentence += results[i][0].transcript
-      totalSentence += " "
-    }
-  }
-
-  historyTranscription += totalSentence
-}
-
-function makeASentence(event) {
-  var partialSentence = ""
-  var results = event.results
-
-  for (i=0; i<results.length; i++) {
-    if (results[i][0].confidence > 0.8 && !results[i].isFinal) {
-      partialSentence += results[i][0].transcript
-    }
-  }
-
-  return partialSentence
-}
-
-  function setYoutubeDivStyle() {
+function setYoutubeDivStyle() {
     var height = window.innerHeight * 0.9
     youtubeDiv.classList.add("transcription-container");
     youtubeDiv.classList.add("transcription-container-fullscreen");
@@ -127,7 +103,7 @@ function generatePDF() {
 
       lines = doc.setFont(font[0], font[1])
         .setFontSize(size)
-        .splitTextToSize(historyTranscription, 7.5)
+        .splitTextToSize(wtkRecognition.history, 7.5)
 
       doc.text(0.5, verticalOffset + size / 72, lines)
 
@@ -138,7 +114,6 @@ function generatePDF() {
 }
 
 function makeClosedCaption(text) {
-    console.log(text)
   if (document.body.contains(div)) {
     lastTranscription = div.textContent
     var newTranscription = groupInterimTranscription(lastTranscription, text)
@@ -181,4 +156,12 @@ function setLanguague() {
   chrome.storage.local.get(["language"], function(languageName) {
     recognition.lang = getCurrentLanguague(languageName.language);
   });
+}
+
+function addJsModule() {
+  const script = document.createElement('script');
+  script.setAttribute("type", "module");
+  script.setAttribute("src", chrome.extension.getURL('src/js/model/wtkRecognition.js'));
+  const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
+  head.insertBefore(script, head.lastChild);
 }

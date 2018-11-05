@@ -23,6 +23,7 @@
   "content_scripts": [
     {
       "js": [
+        "src/js/model/wtkRecognition.js",
         "src/js/helper/storageHelper.js",
         "src/js/model/language.js",
         "src/js/helper/recognitionHelper.js",
