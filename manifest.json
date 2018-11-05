@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "What They Say",
   "description": "Generate your own closed captions with zoom",
-  "version": "1.5.7",
+  "version": "1.5.8",
   "author": "Jackson",
   "short_name": "CC",
   "browser_action": {
