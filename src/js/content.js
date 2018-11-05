@@ -8,6 +8,7 @@ var youtubeDiv = document.createElement('div');
 var isFullScreen = false
 var youtuberContainer
 var lastTranscription = ""
+var fullTranscription = ""
 var wtkRecognition
 
 const transcriptionClass = "transcription-container"
@@ -115,9 +116,11 @@ function generatePDF() {
 
 function makeClosedCaption(text) {
   if (document.body.contains(div)) {
-    lastTranscription = div.textContent
+    console.log(lastTranscription)
+    console.log(text)
     var newTranscription = groupInterimTranscription(lastTranscription, text)
-    div.textContent = newTranscription;
+    lastTranscription = text
+    div.textContent += newTranscription;
 
     if (div.scrollHeight > div.offsetHeight) {
       div.scrollTop += 20 

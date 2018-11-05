@@ -87,9 +87,6 @@ describe('Content Functions tests', () => {
 				var firstText = "Jamais estaremos satisfeitos "
 				 + "enquanto nossos corpos, pesados da fadiga "
 
-				 var secondText = "Jamais estaremos "
-				 + "enquanto nossos corpos, pesados da fadiga "
-
 				var modifiedText = getWordAtPosition(firstText,1)
 
 				expect("Jamais") 
@@ -98,9 +95,6 @@ describe('Content Functions tests', () => {
 
 			it('should get second word', () => {
 				var firstText = "Jamais estaremos satisfeitos "
-				 + "enquanto nossos corpos, pesados da fadiga "
-
-				 var secondText = "Jamais estaremos "
 				 + "enquanto nossos corpos, pesados da fadiga "
 
 				var modifiedText = getWordAtPosition(firstText,2)
@@ -113,9 +107,6 @@ describe('Content Functions tests', () => {
 				var firstText = "Jamais estaremos satisfeitos "
 				 + "enquanto nossos corpos, pesados da fadiga "
 
-				 var secondText = "Jamais estaremos "
-				 + "enquanto nossos corpos, pesados da fadiga "
-
 				var modifiedText = getWordAtPosition(firstText,3)
 
 				expect("satisfeitos") 
@@ -124,9 +115,6 @@ describe('Content Functions tests', () => {
 
 			it('should get fourth word', () => {
 				var firstText = "Jamais estaremos satisfeitos "
-				 + "enquanto nossos corpos, pesados da fadiga "
-
-				 var secondText = "Jamais estaremos satisfeitos "
 				 + "enquanto nossos corpos, pesados da fadiga "
 
 				var modifiedText = getWordAtPosition(firstText,4).word
@@ -161,7 +149,7 @@ describe('Content Functions tests', () => {
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("eu fiz um") 
+				expect(" um") 
 					.toEqual(finalTranscription); 
 			});
 
@@ -171,7 +159,7 @@ describe('Content Functions tests', () => {
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("toca raul eu estou muito feliz que você veio para o nosso aniversário ") 
+				expect(" para o nosso aniversário ") 
 					.toEqual(finalTranscription); 
 			});
 
@@ -181,7 +169,7 @@ describe('Content Functions tests', () => {
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("toca raul eu estou muito feliz que você veio") 
+				expect("") 
 					.toEqual(finalTranscription); 
 			});
 
@@ -191,7 +179,7 @@ describe('Content Functions tests', () => {
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("vídeo sobre o som do th em inglês th") 
+				expect("") 
 					.toEqual(finalTranscription); 
 			});
 
@@ -202,7 +190,7 @@ describe('Content Functions tests', () => {
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("macaco louco eu sou louco nos vídeos que eu ganho apresente um vídeo com as pessoas") 
+				expect(" apresente um vídeo com as pessoas") 
 					.toEqual(finalTranscription); 
 			});
 
@@ -212,7 +200,7 @@ describe('Content Functions tests', () => {
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("vídeo sobre o som do th em inglês eu falei que era um") 
+				expect("") 
 					.toEqual(finalTranscription); 
 			});
 
@@ -222,7 +210,7 @@ describe('Content Functions tests', () => {
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("Entra lá e já paga a sua conta e") 
+				expect(" a sua conta e") 
 					.toEqual(finalTranscription); 
 			});
 
@@ -232,7 +220,7 @@ describe('Content Functions tests', () => {
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("Entra lá e já paga a sua conta e") 
+				expect("") 
 					.toEqual(finalTranscription); 
 			});
 
@@ -243,47 +231,19 @@ describe('Content Functions tests', () => {
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("o apoio da modalmais que é dtvm seja uma corretora de valores que") 
+				expect(" que") 
 					.toEqual(finalTranscription); 
 			});
 
 			it('should group two interim transcription in one without repeat words', () => {
-				var lastTranscription = "Azul Brasil que jogaram Azul Brasil "
-				+ "          parar de ser trouxa e deixar Roubar o seu   receba tem o apoio da modalmais que é      "
-				+ "valores que apoia ou me poupe na      você tá precisando de dinheiro investido para poder realizar "
-				+ "os seus sonhos comprar seu carro        já o mundo você precisa investir melhor esse dinheiro e com "
-				+ "esse dinheiro e com esse"
-				
-				var actualTranscription = "já o mundo você precisa investir melhor esse dinheiro e com esse vídeo"
+				var lastTranscription = "Azul Brasil que jogaram Azul Brasil e com esse"
+				var actualTranscription = "Azul Brasil que jogaram Azul Brasil e com esse vídeo"
 
 				var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 
-				expect("Azul Brasil que jogaram Azul Brasil "
-				+ "          parar de ser trouxa e deixar Roubar o seu   receba tem o apoio da modalmais que é      "
-				+ "valores que apoia ou me poupe na      você tá precisando de dinheiro investido para poder realizar "
-				+ "os seus sonhos comprar seu carro        já o mundo você precisa investir melhor esse dinheiro e com "
-				+ "esse dinheiro e com esse vídeo") 
+				expect(" vídeo") 
 					.toEqual(finalTranscription); 
 			});
-
-			            it('should have the same words', () => {
-				                var lastTranscription = "mas e nao tem nada que hoje eu vou"
-				                var actualTranscription = "hoje eu vou"
-				
-				                var result = isTheSameTranscription(lastTranscription,actualTranscription)
-				                console.log(result)
-				
-				                expect(result).toEqual(true)
-				            });
-				
-				            it('should have not the same words', () => {
-				                var lastTranscription = "A gente estava nessa luta mano a mano contra o kaidou até que o mano deu apenas um hit"
-				                var actualTranscription = "Que loucura mano é muita confusão e muito hit mano"
-				
-				                var result = isTheSameTranscription(lastTranscription, actualTranscription)
-				
-				                expect(result).toEqual(false)
-				            });
 				
 				            it('should group two diffenrent interim transcription', () => {
 				                var lastTranscription = "A gente estava nessa luta mano a mano contra o kaidou até que o mano deu apenas um hit"
@@ -291,7 +251,37 @@ describe('Content Functions tests', () => {
 				
 				                var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
 				
-				                expect("A gente estava nessa luta mano a mano contra o kaidou até que o mano deu apenas um hit Que loucura mano é muita confusão e muito hit mano") 
+				                expect(" Que loucura mano é muita confusão e muito hit mano") 
 				                    .toEqual(finalTranscription); 
 				            });
+
+				            it('should group two diffenrent interim transcription', () => {
+					                var lastTranscription = "nossa nossa"
+					                var actualTranscription = "nossa"
+					
+					                var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+					
+					                expect("") 
+					                    .toEqual(finalTranscription); 
+					            });
+
+					            it('should group two diffenrent interim transcription', () => {
+						                var lastTranscription = "oi mas meus deus que isso nossa"
+						                var actualTranscription = "nossa"
+						
+						                var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+						
+						                expect("") 
+						                    .toEqual(finalTranscription); 
+						            });
+
+						            fit('should group two diffenrent with upper case', () => {
+							                var lastTranscription = "oi mas meus deus que isso nossa"
+							                var actualTranscription = "Nossa"
+							
+							                var finalTranscription = groupInterimTranscription(lastTranscription, actualTranscription)
+							
+							                expect("") 
+							                    .toEqual(finalTranscription); 
+							            });
 });

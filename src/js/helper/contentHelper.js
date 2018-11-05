@@ -41,31 +41,31 @@ function getPosition(string, subString, index) {
 }
 
 function groupInterimTranscription(last, actual) {
+
+  last = last.toLowerCase()
+  actual = actual.toLowerCase()
+
   var interceptionPoint = getInterceptionWordBeetweenTwoInterimTranscription(last, actual)
 
-  if (wordCount(last) == wordCount(actual) + 1) {
-    return last
+  console.log(isTheSameLastTwoWords(last, actual))
+
+  //Dont Repeat
+  if (wordCount(last) == wordCount(actual) + 1
+   || isTheSameTranscription(last,actual) 
+   || isTheSameLastTwoWords(last, actual)
+   || getWordAtPosition(last, wordCount(last)).word == getWordAtPosition(actual, wordCount(actual)).word ) {
+    return ""
   }
 
-  if (last == actual) {
-    return last
+  console.log(interceptionPoint)
+
+  if (interceptionPoint) {
+    console.log("entrei aqui")
+    return actual.slice(interceptionPoint.positionEnd, actual.length)
+  } else {
+    return " " + actual
   }
 
-  if (interceptionPoint.word == undefined) {
-    return last + " " + actual
-  }
-
-
-  if (wordCount(actual) == wordCount(last) + 1 && isTheSameLastTwoWords(last, actual)) {
-    return last + " " + getWordAtPosition(actual, wordCount(actual)).word
-  }
-
-
-  if (interceptionPoint.word == undefined || !isTheSameTranscription(last, actual)) {
-    return last + " " + actual
-  }
-
-  return last + actual.slice(interceptionPoint.positionEnd, actual.length)
 }
 
 function getInterceptionWordBeetweenTwoInterimTranscription(first, second) {
@@ -73,9 +73,11 @@ function getInterceptionWordBeetweenTwoInterimTranscription(first, second) {
   var quantitySecondWord = wordCount(second)
   var lastWordFirstTranscription = getWordAtPosition(first, quantityFirstWord).word
 
-  for (i = quantitySecondWord; i >= 1; i--) {
-    if (lastWordFirstTranscription == getWordAtPosition(second, i).word) {
-      return getWordAtPosition(second, i)
+  for (i = 8; i >= 1; i--) {
+    if (lastWordFirstTranscription == getWordAtPosition(second, quantitySecondWord - i).word) {
+      if ((getWordAtPosition(first, quantityFirstWord - 1).word == getWordAtPosition(second, quantitySecondWord - i - 1).word)) {
+        return getWordAtPosition(second, quantitySecondWord - i)
+      }
     }
   }
 
@@ -83,11 +85,12 @@ function getInterceptionWordBeetweenTwoInterimTranscription(first, second) {
 }
 
 function isTheSameTranscription(last, actual) {
-  var lastWords = ""
-  if (wordCount(last) > 3) {
-    var lastWords = getWordAtPosition(last, wordCount(last) - 2).word + " " + getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word
-  } else if (wordCount(last.length) == 2) {
-    var lastWords = getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word
+  if (wordCount(last) > 3 && wordCount(actual) > 3) {
+    return   getWordAtPosition(last, wordCount(last) - 2).word + " " + getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word
+    == getWordAtPosition(actual, wordCount(actual) - 2).word + " " + getWordAtPosition(actual, wordCount(actual) - 1).word + " " + getWordAtPosition(actual, wordCount(actual)).word
+  } else if (wordCount(last) == 2 && wordCount(actual) == 2) {
+    var lastWords = getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word 
+    == getWordAtPosition(actual, wordCount(actual) - 1).word + " " + getWordAtPosition(actual, wordCount(actual)).word
   } else {
     return false
   }
@@ -97,11 +100,6 @@ function isTheSameTranscription(last, actual) {
 }
 
 function isTheSameLastTwoWords(last, actual) {
-  var lastWords = ""
-
-  if (wordCount(last) >= 2) {
-    var lastWords = getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word
-  }
-
-  return actual.includes(lastWords)
+  return  getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word
+  == getWordAtPosition(actual, wordCount(actual) - 1).word + " " + getWordAtPosition(actual, wordCount(actual)).word
 }
