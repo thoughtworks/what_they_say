@@ -6,13 +6,38 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="css/icons.css">
         <link rel="stylesheet" href="css/popup.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
     </head>
     <body class="container">
         <div class="bound">
+            <div class="player-logo">
+                <img src="https://placehold.it/60x60" style="width: 53px ; height: 48px ; align-items:center; justify-content:center;">
+            </div>
             <div class="blue_bg">
-                <span>teste</span>
+                <div class="play-group">
+                    <div class="play-container">
+                        <div class="play-image-text-group">
+                            <img src="img/wts-player-play.svg" class="play-circle">
+                            <span> Play </span>
+                        </div>
+                    </div>
+                    <div class="play-container">
+                        <div class="play-image-text-group">
+                            <img src="img/wts-player-stop.svg" class="play-circle">
+                            <span> Stop </span>
+                        </div>
+                    </div>
+                    <div class="play-container">
+                        <div class="play-image-text-group">
+                            <img src="img/wts-player-rec.svg" class="play-circle-record">
+                            <span class="play-timer"> 00:04 </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
         <h2 class="title-version">What They Say</h2>
         <i id="version">Version: </i>
         <button type="button" id="transcription" class="start"> <i class="fa fa-closed-captioning"> </i> Transcription</button>
