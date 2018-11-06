@@ -160,3 +160,10 @@ select {
     height: 4px;
     object-fit: contain;
   }
+  .wts_logo {
+    width: 53px;
+    height: 48px;
+    text-align: center;
+    margin: 16px;
+  }
+  
