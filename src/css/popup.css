@@ -3,7 +3,7 @@
 
 body {
     min-width: 300px;
-    padding: 10px 20px;
+    margin: 0;
 }
 
 #iframe {
@@ -106,7 +106,6 @@ button:focus {
     float: right;
     width: 315px;
     height: 80px;
-    border-radius: 4px;
     background-color: #0f1e32;
   }
 
@@ -194,6 +193,7 @@ button:focus {
     }
 
     .wts-menu-language {
+    padding-left: 16px;
     display: flex;
     width: 100%;
     align-items:center;
