@@ -85,3 +85,31 @@ select {
     position: absolute;
     pointer-events: none;
 }
+
+.bound {
+    width: 400px;
+    height: 80px;
+    border-radius: 4px;
+    background-color: #ffffff;
+  }
+
+.blue_bg {
+    float: right;
+    width: 315px;
+    height: 80px;
+    border-radius: 4px;
+    background-color: #0f1e32;
+  }
+
+  .blue_bg span {
+    width: 37px;
+    height: 15px;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+  }
