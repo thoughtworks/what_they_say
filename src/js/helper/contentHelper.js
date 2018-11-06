@@ -41,31 +41,28 @@ function getPosition(string, subString, index) {
 }
 
 function groupInterimTranscription(last, actual) {
-
   last = last.toLowerCase()
   actual = actual.toLowerCase()
 
-  var interceptionPoint = getInterceptionWordBeetweenTwoInterimTranscription(last, actual)
-
-  console.log(isTheSameLastTwoWords(last, actual))
-
-  //Dont Repeat
-  if (wordCount(last) == wordCount(actual) + 1
-   || isTheSameTranscription(last,actual) 
-   || isTheSameLastTwoWords(last, actual)
-   || getWordAtPosition(last, wordCount(last)).word == getWordAtPosition(actual, wordCount(actual)).word ) {
+  if (isSameTranscription(last, actual)) {
     return ""
   }
 
-  console.log(interceptionPoint)
+  var interceptionPoint = getInterceptionWordBeetweenTwoInterimTranscription(last, actual)
 
   if (interceptionPoint) {
-    console.log("entrei aqui")
     return actual.slice(interceptionPoint.positionEnd, actual.length)
   } else {
     return " " + actual
   }
 
+}
+
+function isSameTranscription(last, actual) {
+  return (wordCount(last) == wordCount(actual) + 1
+    || isTheSameTranscription(last, actual)
+    || isTheSameLastTwoWords(last, actual)
+    || getWordAtPosition(last, wordCount(last)).word == getWordAtPosition(actual, wordCount(actual)).word)
 }
 
 function getInterceptionWordBeetweenTwoInterimTranscription(first, second) {
@@ -86,20 +83,34 @@ function getInterceptionWordBeetweenTwoInterimTranscription(first, second) {
 
 function isTheSameTranscription(last, actual) {
   if (wordCount(last) > 3 && wordCount(actual) > 3) {
-    return   getWordAtPosition(last, wordCount(last) - 2).word + " " + getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word
-    == getWordAtPosition(actual, wordCount(actual) - 2).word + " " + getWordAtPosition(actual, wordCount(actual) - 1).word + " " + getWordAtPosition(actual, wordCount(actual)).word
+    return getLastsWord(last, 3) + " " + getLastsWord(last, 2) + " " + getLastsWord(last, 1)
+      == getLastsWord(actual, 3) + " " + getLastsWord(actual, 2) + " " + getLastsWord(actual, 1)
   } else if (wordCount(last) == 2 && wordCount(actual) == 2) {
-    var lastWords = getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word 
-    == getWordAtPosition(actual, wordCount(actual) - 1).word + " " + getWordAtPosition(actual, wordCount(actual)).word
+    return getLastsWord(last, 2) + " " + getLastsWord(actual, 1) == getLastsWord(actual, 2) + " " + getLastsWord(actual, 1)
   } else {
     return false
   }
-
-
-  return actual.includes(lastWords)
 }
 
 function isTheSameLastTwoWords(last, actual) {
-  return  getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word
-  == getWordAtPosition(actual, wordCount(actual) - 1).word + " " + getWordAtPosition(actual, wordCount(actual)).word
+  return getWordAtPosition(last, wordCount(last) - 1).word + " " + getWordAtPosition(last, wordCount(last)).word
+    == getWordAtPosition(actual, wordCount(actual) - 1).word + " " + getWordAtPosition(actual, wordCount(actual)).word
+}
+
+function getLastsWord(sentence, index) {
+  var phrase = ""
+  for (var i = (index - 1); i == 0; i--) {
+    phrase += getWordAtPosition(sentence, wordCount(sentence) - index).word
+    phrase += " "
+  }
+  return phrase
+}
+
+function removeTranscriptionContainer() {
+  if(document.body.contains(div)) {
+    document.body.removeChild(div)
+  }
+  if (youtuberContainer && youtuberContainer.contains(youtubeDiv)) {
+    youtuberContainer.removeChild(youtubeDiv)
+  }
 }

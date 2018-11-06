@@ -1,4 +1,5 @@
 //setup
+const transcriptionClass = "transcription-container"
 
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
@@ -11,8 +12,6 @@ var lastTranscription = ""
 var fullTranscription = ""
 var wtkRecognition
 
-const transcriptionClass = "transcription-container"
-
 setup()
 
 //listeners
@@ -20,7 +19,7 @@ setup()
 document.addEventListener('webkitfullscreenchange', setFullScreenHandler, false);
 
 chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
+  function (request, sender, sendResponse) {
 
     if (request.action == "start") {
       isStopRecognized = false
@@ -33,33 +32,34 @@ chrome.runtime.onMessage.addListener(
     } else if (request.language) {
       recognition.lang = request.language;
     }
-});
+  });
 
 //callback recognition
 
-recognition.onresult = function(event) {
+recognition.onresult = function (event) {
   console.log("speech start")
 
-  if (!wtkRecognition ) {
+  if (!wtkRecognition) {
     wtkRecognition = new WTKRecognition()
   }
 
   makeClosedCaption(wtkRecognition.makeASentenceAndPutOnHistory(event))
-} 
+}
 
-recognition.onspeechend = function() {
+recognition.onspeechend = function () {
   console.log('Speech has stopped being detected');
 }
 
-recognition.onend = function(event) {
+recognition.onend = function (event) {
   if (!isStopRecognized) {
     startRecognition()
   } else {
     recognition.stop()
+    removeTranscriptionContainer()
   }
 }
 
-recognition.onerror = function(event) {
+recognition.onerror = function (event) {
   isStopRecognized = true
   recognition.stop();
   console.log("error happens click to transcription again")
@@ -71,7 +71,7 @@ recognition.onerror = function(event) {
 function setup() {
   addJsModule()
   setupRecognition(recognition)
-  addClass(div,transcriptionClass)
+  addClass(div, transcriptionClass)
   setYoutubeDivStyle()
   setLanguague()
 }
@@ -82,18 +82,18 @@ function startRecognition() {
 }
 
 function setYoutubeDivStyle() {
-    var height = window.innerHeight * 0.9
-    youtubeDiv.classList.add("transcription-container");
-    youtubeDiv.classList.add("transcription-container-fullscreen");
-    youtubeDiv.style.top = height.toString() + "px"
-  }
+  var height = window.innerHeight * 0.9
+  youtubeDiv.classList.add("transcription-container");
+  youtubeDiv.classList.add("transcription-container-fullscreen");
+  youtubeDiv.style.top = height.toString() + "px"
+}
 
 function generatePDF() {
   var doc = new jsPDF('p', 'in', 'letter'),
     sizes = [12, 16, 20],
     fonts = [['Helvetica', '']],
     font, size, lines,
-    margin = 0.5, 
+    margin = 0.5,
     verticalOffset = margin
 
 
@@ -116,16 +116,13 @@ function generatePDF() {
 
 function makeClosedCaption(text) {
   if (document.body.contains(div)) {
-    console.log(lastTranscription)
-    console.log(text)
     var newTranscription = groupInterimTranscription(lastTranscription, text)
     lastTranscription = text
     div.textContent += newTranscription;
 
     if (div.scrollHeight > div.offsetHeight) {
-      div.scrollTop += 20 
+      div.scrollTop += 20
     }
-
 
   } else {
     div.textContent = text
@@ -134,37 +131,38 @@ function makeClosedCaption(text) {
 }
 
 function getLanguageSelection() {
-  chrome.storage.local.get(["language"], function(languageName) {
-      return languageName.language
+  chrome.storage.local.get(["language"], function (languageName) {
+    return languageName.language
   });
 }
 
 function setFullScreenHandler() {
-    if (document.webkitIsFullScreen === true) {
-      isFullScreen = true
-    } else if (document.webkitIsFullScreen === false) {
-      isFullScreen = false
-    }
+  if (document.webkitIsFullScreen === true) {
+    isFullScreen = true
+  } else if (document.webkitIsFullScreen === false) {
+    isFullScreen = false
+  }
 }
 
 function setYoutubeFullScreenCaptions() {
-    youtuberContainer = document.getElementsByClassName("html5-video-container")
+  youtuberContainer = document.getElementsByClassName("html5-video-container")
 
-    if (youtuberContainer) {
-      youtuberContainer[0].appendChild(youtubeDiv);
-    }
+  if (youtuberContainer) {
+    youtuberContainer[0].appendChild(youtubeDiv);
+  }
 }
 
 function setLanguague() {
-  chrome.storage.local.get(["language"], function(languageName) {
+  chrome.storage.local.get(["language"], function (languageName) {
     recognition.lang = getCurrentLanguague(languageName.language);
   });
 }
 
 function addJsModule() {
   const script = document.createElement('script');
+  const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
+
   script.setAttribute("type", "module");
   script.setAttribute("src", chrome.extension.getURL('src/js/model/wtkRecognition.js'));
-  const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
   head.insertBefore(script, head.lastChild);
 }
