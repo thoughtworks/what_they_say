@@ -1,0 +1,80 @@
+.custom-select {
+    position: relative;
+    font-family: 'Montserrat';
+    width: 160px;
+    height: 18px;
+    margin-left: 122px;
+  }
+  .custom-select select {
+    display: none; /*hide original SELECT element:*/
+  }
+  .select-selected {
+    background-color: #fff;
+    color: black;
+    font-family: sans-serif;
+    font-weight: bold;
+  }
+  /*style the arrow inside the select element:*/
+  .select-selected:after {
+    position: relative;
+    content: "";
+    top: 11px;
+    left: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: red transparent transparent transparent;
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+  /*point the arrow upwards when the select box is open (active):*/
+  .select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 27px;
+  }
+  /*style the items (options), including the selected item:*/
+  .select-items div{
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      height: 18px;
+      font-family: Montserrat;
+      font-size: 14px;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      margin-top: 16px;
+  }
+  .select-items div:first-child{
+      padding-top: 16px;
+      border: none;
+  }
+  
+  .select-selected {
+    color: black;
+    font-weight: bolder;
+    height: 18px;
+    cursor: pointer;
+    user-select: none;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  }
+  /*style items (options):*/
+  .select-items {
+    position: relative;
+    background-color: #0f1e32;
+    z-index: 99;
+    width: 100%;
+    padding-bottom: 20px;
+    bottom: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  }
+  /*hide the items when the select box is closed:*/
+  .select-hide {
+    display: none;
+  }

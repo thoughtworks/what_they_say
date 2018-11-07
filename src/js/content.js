@@ -3,8 +3,6 @@ const transcriptionClass = "transcription-container"
 
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
-var languague = convertLanguageNameToCode(getLanguageSelection())
-console.log(languague)
 var div = document.createElement('div');
 var youtubeDiv = document.createElement('div');
 var isFullScreen = false
