@@ -2,7 +2,6 @@
 
 var actionButton = document.getElementById('transcription');
 var version = document.getElementById('version')
-var languageSelectBox
 const localStorage = new LocalStorage(chrome)
 const language = new Language("")
 var transcriptionButton = new TranscriptionButtonStatus()
@@ -20,15 +19,13 @@ window.addEventListener("DOMContentLoaded", function() {
 
 function viewLoadSetup() {
   version.textContent += chrome.runtime.getManifest().version
-  languageSelectBox = document.getElementById('language-select')
-  languageSelectBox.addEventListener("change", changeLanguage, false)
   loadButtonStatus()
   loadLanguageSelection()
 }
 
 function loadLanguageSelection() {
   localStorage.get("language", function(language) {
-    languageSelectBox.value = language.language
+    buildCustomSelectLanguage(language)
   })
 }
 
@@ -100,7 +97,6 @@ function sendHistoryMessageTab() {
 }
 
 function changeLanguage() {
-  language.language = languageSelectBox.value
   saveLanguageStatus(language)
 }
 
@@ -112,16 +108,28 @@ function saveTranscriptionButtonAction() {
   localStorage.save(transcriptionButton, function(){})
 }
 
-//
+
+function buildCustomSelectLanguage(languageObj) {
+  //
 var x, i, j, selElmnt, a, b, c;
 /*look for any elements with the class "custom-select":*/
 x = document.getElementsByClassName("custom-select");
 for (i = 0; i < x.length; i++) {
+  console.log(x)
   selElmnt = x[i].getElementsByTagName("select")[0];
   /*for each element, create a new DIV that will act as the selected item:*/
   a = document.createElement("DIV");
   a.setAttribute("class", "select-selected");
-  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+
+
+  //SET THE LANGUAGE SELECTED
+  //a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+  console.log(languageObj)
+  a.innerHTML = languageObj.language
+  console.log(selElmnt.options[selElmnt.selectedIndex].innerHTML)
+  //
+
+
   x[i].appendChild(a);
   /*for each element, create a new DIV that will contain the option list:*/
   b = document.createElement("DIV");
@@ -129,13 +137,7 @@ for (i = 0; i < x.length; i++) {
   for (j = 0; j < selElmnt.length; j++) {
     /*for each option in the original select element,
     create a new DIV that will act as an option item:*/
-    console.log(selElmnt[j])
-    console.log(document.getElementsByTagName("select")[0].value)
-    // console.log(selElmnt[j].value)
-    // console.log(document.getElementsByTagName("ame-as-selected".value))
-    if (selElmnt[j].value == document.getElementsByTagName("select")[0].value) {
-      continue
-    }
+
     c = document.createElement("DIV");
     c.innerHTML = selElmnt.options[j].innerHTML;
     c.addEventListener("click", function(e) {
@@ -143,12 +145,25 @@ for (i = 0; i < x.length; i++) {
         and the selected item:*/
         var y, i, k, s, h;
         s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        //GET SELECTED VALUE
         h = this.parentNode.previousSibling;
+
         for (i = 0; i < s.length; i++) {
           if (s.options[i].innerHTML == this.innerHTML) {
+            console.log(s)
             s.selectedIndex = i;
+
+            // SET ON SELECT BOX
             h.innerHTML = this.innerHTML;
+                    ///// SAVE LANGUAGE 
+
+            console.log(h)
+            language.language = h.textContent
+            saveLanguageStatus(language)
+
+            //
             y = this.parentNode.getElementsByClassName("same-as-selected");
+            console.log(y)
             for (k = 0; k < y.length; k++) {
               y[k].removeAttribute("class");
             }
@@ -170,12 +185,18 @@ for (i = 0; i < x.length; i++) {
       this.classList.toggle("select-arrow-active");
     });
 }
+/*if the user clicks anywhere outside the select box,
+then close all select boxes:*/
+document.addEventListener("click", closeAllSelect);
+}
+
 function closeAllSelect(elmnt) {
   /*a function that will close all select boxes in the document,
   except the current select box:*/
   var x, y, i, arrNo = [];
   x = document.getElementsByClassName("select-items");
   y = document.getElementsByClassName("select-selected");
+  console.log(y)
   for (i = 0; i < y.length; i++) {
     if (elmnt == y[i]) {
       arrNo.push(i)
@@ -189,6 +210,3 @@ function closeAllSelect(elmnt) {
     }
   }
 }
-/*if the user clicks anywhere outside the select box,
-then close all select boxes:*/
-document.addEventListener("click", closeAllSelect);

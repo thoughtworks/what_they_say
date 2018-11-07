@@ -3,7 +3,8 @@ const transcriptionClass = "transcription-container"
 
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
-var languague = getLanguageSelection()
+var languague = convertLanguageNameToCode(getLanguageSelection())
+console.log(languague)
 var div = document.createElement('div');
 var youtubeDiv = document.createElement('div');
 var isFullScreen = false
@@ -154,7 +155,8 @@ function setYoutubeFullScreenCaptions() {
 
 function setLanguague() {
   chrome.storage.local.get(["language"], function (languageName) {
-    recognition.lang = getCurrentLanguague(languageName.language);
+    recognition.lang = convertLanguageNameToCode(getCurrentLanguague(languageName.language))
+    console.log(recognition.lang)
   });
 }
 
@@ -165,4 +167,16 @@ function addJsModule() {
   script.setAttribute("type", "module");
   script.setAttribute("src", chrome.extension.getURL('src/js/model/wtkRecognition.js'));
   head.insertBefore(script, head.lastChild);
+}
+
+function convertLanguageNameToCode(language) {
+  var code = ""
+    switch (language) {
+      case "English (US)": code = "en-US"; break
+      case  "German":  code = "de-DE"; break
+      case  "Portuguese (Brasil)" : code = "pt-BR"; break
+      case  "Spanish (Chile)": code = "es-CL"; break
+    }
+
+    return code
 }

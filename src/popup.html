@@ -41,11 +41,11 @@
             <div class="wts-menu-language">
                 <Label class="wts-menu-group-label">Language</Label>
                 <div class="custom-select">
-                    <select>
-                        <option value="en-US">English (US)</option>
-                        <option value="de-DE">German</option>
-                        <option value="pt-BR" selected>Portuguese (Brasil)</option>
-                        <option value="es-CL">Spanish (Chile)</option>
+                    <select id="wts-custom-select">
+                        <option value="English (US)">English (US)</option>
+                        <option value="German">German</option>
+                        <option value="Portuguese (Brasil)" selected>Portuguese (Brasil)</option>
+                        <option value="Spanish (Chile)">Spanish (Chile)</option>
                     </select>
                   </div>
             </div>
@@ -59,14 +59,6 @@
         <script src="js/model/transcriptionButtonStatus.js"></script>
         <script src="js/model/language.js"></script>
         <script src="js/popup.js"></script>
-        <div class="language-select-element">
-            <label for="language-select">Spoken language:</label>
-            <select class="language-select" id="language-select">
-              <option value="en-US">English (US)</option>
-              <option value="de-DE">German</option>
-              <option value="pt-BR" selected>Portuguese (Brasil)</option>
-              <option value="es-CL">Spanish (Chile)</option>
-            </select>
         <iframe id ="iframe" src="https://example.com" width="1px" height="1px" allow="geolocation; microphone; camera"></iframe>
         <p>This project is a real time closed caption, made to disability people but people withou disability can use to take notes.</p>
     </body>
