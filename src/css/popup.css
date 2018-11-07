@@ -141,19 +141,20 @@ button:focus {
   
 
   .wts-menu-group {
-      display: flex;
-      align-items:center;
+      position: relative;
+      display: block;
       width: 400px;
-      height: 56px;
+      height: 112px;
       box-shadow: 0 1px 0 0 #e6e6e6;
       background-color: #ffffff;
   }
 
   .wts-menu-group-label {
+    padding-left: 16px;
     width: 62px;
     height: 15px;
     font-family: Montserrat;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bolder;
     font-style: normal;
     font-stretch: normal;
@@ -163,8 +164,31 @@ button:focus {
     }
 
     .wts-menu-language {
-    padding-left: 16px;
     display: flex;
     width: 100%;
+    height: 56px;
     align-items:center;
     }
+
+    .wts-menu-lines {
+        display: flex;
+        width: 100%;
+        height: 56px;
+        align-items:center;
+        }
+
+        .wts-menu-input-number {
+            width: 25px;
+            height: 18px;
+            font-family: Montserrat;
+            font-size: 14px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: center;
+            color: #0f1e32;
+        }
+
+

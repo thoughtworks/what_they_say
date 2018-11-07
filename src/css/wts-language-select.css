@@ -3,7 +3,7 @@
     font-family: 'Montserrat';
     width: 160px;
     height: 18px;
-    margin-left: 122px;
+    padding-left: 200px;
   }
   .custom-select select {
     display: none; /*hide original SELECT element:*/
