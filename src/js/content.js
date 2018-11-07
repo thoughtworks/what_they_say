@@ -3,13 +3,36 @@ const transcriptionClass = "transcription-container"
 
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
+
 var div = document.createElement('div');
+
+
 var youtubeDiv = document.createElement('div');
 var isFullScreen = false
 var youtuberContainer
 var lastTranscription = ""
 var fullTranscription = ""
 var wtkRecognition
+
+var recognizing = false;
+var ignore_onend;
+var final_transcript = '';
+var final_span = document.createElement('span');
+var interim_span = document.createElement('span');
+interim_span.id = "interim_span"
+interim_span.className = "interim"
+interim_span.id = "final_span"
+interim_span.className = "final"
+var first_char = /\S/;
+var two_line = /\n\n/g;
+var one_line = /\n/g;
+var t0
+var t1
+var t2
+var t3
+var silenceVerifyAverage
+var silenceTimer
+var silenceCount = 0
 
 setup()
 
@@ -23,11 +46,13 @@ chrome.runtime.onMessage.addListener(
     if (request.action == "start") {
       isStopRecognized = false
       startRecognition();
+      silenceTimer = setInterval(verifySilenceTime, 5000);
     } else if (request.action == "history") {
       generatePDF();
     } else if (request.action == "stop") {
       isStopRecognized = true
       recognition.stop();
+      clearInterval(silenceTimer);
     } else if (request.language) {
       recognition.lang = request.language;
     }
@@ -35,48 +60,109 @@ chrome.runtime.onMessage.addListener(
 
 //callback recognition
 
-recognition.onresult = function (event) {
-  console.log("speech start")
+recognition.onstart = function() {
+  console.log("onstart")
+  recognizing = true;
+};
 
-  if (!wtkRecognition) {
-    wtkRecognition = new WTKRecognition()
+recognition.onresult = function(event) {
+  t0 = performance.now();
+
+  var interim_transcript = '';
+  final_transcript = '';
+
+  for (var i = event.resultIndex; i < event.results.length; ++i) {
+    if (event.results[i].isFinal) {
+      final_transcript += event.results[i][0].transcript;
+    } else {
+      interim_transcript += event.results[i][0].transcript;
+    }
+  }
+  final_transcript = capitalize(final_transcript);
+  final_span.innerHTML = linebreak(final_transcript);
+  interim_span.innerHTML = linebreak(interim_transcript);
+
+  t1 = performance.now();
+  console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+  if (div.scrollHeight > div.offsetHeight) {
+    div.scrollTop += 20 
   }
 
-  makeClosedCaption(wtkRecognition.makeASentenceAndPutOnHistory(event))
 }
 
-recognition.onspeechend = function () {
-  console.log('Speech has stopped being detected');
+function capitalize(s) {
+  return s.replace(first_char, function(m) { return m.toUpperCase(); });
 }
 
-recognition.onend = function (event) {
+function linebreak(s) {
+  return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+}
+
+recognition.onend = function() {
+  
+
   if (!isStopRecognized) {
-    startRecognition()
+    recognition.start()
   } else {
     recognition.stop()
-    removeTranscriptionContainer()
   }
-}
 
-recognition.onerror = function (event) {
+  console.log("onend")
+  recognizing = false;
+  if (ignore_onend) {
+    return;
+  }
+
+  if (!final_transcript) {
+    return;
+  }
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges();
+    var range = document.createRange();
+    range.selectNode(document.getElementById('final_span'));
+    window.getSelection().addRange(range);
+  }
+};
+
+recognition.onerror = function(event) {
   isStopRecognized = true
-  recognition.stop();
-  console.log("error happens click to transcription again")
-  console.log(event.error);
-}
+
+  console.log("onerror")
+  if (event.error == 'no-speech') {
+    console.log("no-speech")
+
+    ignore_onend = true;
+  }
+  if (event.error == 'audio-capture') {
+    console.log("audio-capture");
+    ignore_onend = true;
+  }
+  if (event.error == 'not-allowed') {
+    console.log("not-allowed")
+    recognition.stop()
+    ignore_onend = true;
+    
+  }
+};
 
 //functions
 
 function setup() {
   addJsModule()
-  setupRecognition(recognition)
+  recognition.continuous = true;
+  recognition.interimResults = true;
   addClass(div, transcriptionClass)
   setYoutubeDivStyle()
   setLanguague()
+  silenceTimer = setInterval(verifySilenceTime, 5000);
 }
 
 function startRecognition() {
   setLanguague()
+  div.appendChild(final_span)
+  div.appendChild(interim_span)
+  document.body.appendChild(div)
   recognition.start();
 }
 
@@ -113,21 +199,6 @@ function generatePDF() {
   doc.save('a4.pdf')
 }
 
-function makeClosedCaption(text) {
-  if (document.body.contains(div)) {
-    var newTranscription = groupInterimTranscription(lastTranscription, text)
-    lastTranscription = text
-    div.textContent += newTranscription;
-
-    if (div.scrollHeight > div.offsetHeight) {
-      div.scrollTop += 20
-    }
-
-  } else {
-    div.textContent = text
-    document.body.appendChild(div)
-  }
-}
 
 function getLanguageSelection() {
   chrome.storage.local.get(["language"], function (languageName) {
@@ -177,4 +248,33 @@ function convertLanguageNameToCode(language) {
     }
 
     return code
+}
+
+function verifySilenceTime() {
+
+  if (!recognizing) {
+    return
+  }
+
+  console.log("timer")
+
+
+  if (silenceCount >= 1) {
+    console.log("reniciando")
+    recognition.stop()
+  }
+
+  if (t0 == t2 && t1 == t3) {
+    console.log("adicionando count")
+    silenceCount++
+    clearInterval(silenceTimer);
+    silenceTimer = setInterval(verifySilenceTime, 5000);
+  } else {
+    console.log(t0)
+    console.log(t1)
+    silenceCount = 0
+  }
+
+  t2 = t0
+  t3 = t1
 }
