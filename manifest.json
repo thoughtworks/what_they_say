@@ -8,7 +8,7 @@
   "browser_action": {
     "default_icon": "src/img/wts_icon_67.png",
     "default_title": "What They Say",
-    "default_popup": "src/popup.html"
+    "default_popup": "src/view/popup.html"
   },
   "icons": {
     "16": "src/img/wts_icon_16.png",
@@ -23,12 +23,9 @@
   "content_scripts": [
     {
       "js": [
-        "src/js/model/wtkRecognition.js",
-        "src/js/helper/storageHelper.js",
+        "src/js/model/transcriptionContainerModel.js",
+        "src/js/provider/chromeProvider.js",
         "src/js/model/language.js",
-        "src/js/helper/recognitionHelper.js",
-        "src/js/helper/storageHelper.js",
-         "src/js/helper/contentHelper.js",
         "src/js/content.js",
         "src/js/jspdf.js"
       ],

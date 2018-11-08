@@ -1,4 +1,4 @@
-class LocalStorage {
+class ChromeProvider {
     constructor(database) {
         this.database = database;
     }

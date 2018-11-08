@@ -1,12 +1,11 @@
 //setup
-const transcriptionClass = "transcription-container"
+const container
 
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
 
 var isFullScreen = false
 var fullTranscription = ""
-var wtkRecognition
 
 var recognizing = false;
 var ignore_onend;
@@ -23,16 +22,6 @@ var silenceVerifyAverage
 var silenceTimer
 var silenceCount = 0
 
-var final_span = document.createElement('span');
-var interim_span = document.createElement('span');
-var div = document.createElement('div');
-div.appendChild(final_span)
-div.appendChild(interim_span)
-setupTranscriptionContainer(div) 
-interim_span.id = "interim_span"
-interim_span.className = "interim"
-interim_span.id = "final_span"
-interim_span.className = "final"
 
 setup()
 
@@ -63,7 +52,9 @@ chrome.runtime.onMessage.addListener(
 
 recognition.onstart = function() {
   console.log("onstart")
-  shouldDisplayTranscriptionContainer(true)
+  
+  setupInstance()
+  container.shouldDisplay(true)
   recognizing = true;
 };
 
@@ -81,13 +72,13 @@ recognition.onresult = function(event) {
     }
   }
   final_transcript = capitalize(final_transcript);
-  final_span.innerHTML = linebreak(final_transcript);
-  interim_span.innerHTML = linebreak(interim_transcript);
+  container.final_span.innerHTML = linebreak(final_transcript);
+  container.interim_span.innerHTML = linebreak(interim_transcript);
 
   t1 = performance.now();
   console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
-  scrollTranscriptionContainerIfNeeds()
+  container.scrollIfNeeds()
 
 }
 
@@ -105,7 +96,9 @@ recognition.onend = function() {
     recognition.start()
   } else {
     recognition.stop()
-    shouldDisplayTranscriptionContainer(false)
+    setupInstance()
+    console.log(container)
+    container.shouldDisplay(false)
   }
 
   console.log("onend")
@@ -214,7 +207,7 @@ function addJsModule() {
   const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
 
   script.setAttribute("type", "module");
-  script.setAttribute("src", chrome.extension.getURL('src/js/model/wtkRecognition.js'));
+  script.setAttribute("src", chrome.extension.getURL('src/js/model/transcriptionContainerModel.js'));
   head.insertBefore(script, head.lastChild);
 }
 
@@ -259,16 +252,15 @@ function verifySilenceTime() {
   t3 = t1
 }
 
-function shouldDisplayTranscriptionContainer(boolean) {
-  if(!document.body.contains(div) && boolean) {
-    document.body.appendChild(div)
-  } else if (document.body.contains(div) && !boolean) {
-    document.body.removeChild(div)
-  }
+
+function getCurrentLanguague(language) {
+  var defaultLanguage = "pt-BR"
+
+  return !language ? defaultLanguage : language
 }
 
-function scrollTranscriptionContainerIfNeeds() {
-  if (div.scrollHeight > div.offsetHeight) {
-    div.scrollTop += 20 
+function setupInstance() {
+  if (!container) {
+    container = new TranscriptionContainerModel(document)
   }
 }

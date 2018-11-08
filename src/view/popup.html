@@ -4,31 +4,31 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="css/icons.css">
-        <link rel="stylesheet" href="css/popup.css">
-        <link rel="stylesheet" href="css/wts-language-select.css">
+        <link rel="stylesheet" href="../css/icons.css">
+        <link rel="stylesheet" href="../css/popup.css">
+        <link rel="stylesheet" href="../css/wts-language-select.css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </head>
     <body class="container">        
         <div class="bound">
-            <img src="img/wts-logo.svg" class="wts_logo">
+            <img src="../img/wts-logo.svg" class="wts_logo">
             <div class="blue_bg">
                 <div class="play-group">
                     <div class="play-container">
                         <div class="play-image-text-group">
-                            <img src="img/wts-player-play.svg" class="play-circle">
+                            <img src="../img/wts-player-play.svg" class="play-circle">
                             <span> Play </span>
                         </div>
                     </div>
                     <div class="play-container">
                         <div class="play-image-text-group">
-                            <img src="img/wts-player-stop.svg" class="play-circle">
+                            <img src="../img/wts-player-stop.svg" class="play-circle">
                             <span> Stop </span>
                         </div>
                     </div>
                     <div class="play-container">
                         <div class="play-image-text-group">
-                            <img src="img/wts-player-rec.svg" class="play-circle-record">
+                            <img src="../img/wts-player-rec.svg" class="play-circle-record">
                             <span class="play-timer"> 00:04 </span>
                         </div>
                     </div>
@@ -57,11 +57,11 @@
         <i id="version">Version: </i>
         <button type="button" id="transcription" class="start"> <i class="fa fa-closed-captioning"> </i> Transcription</button>
         <button type="button" id="history"> <i class="fa fa-clock"></i> History </button>
-        <script src="js/helper/storageHelper.js"></script>
-        <script src="js/model/transcriptionButtonStatus.js"></script>
-        <script src="js/model/language.js"></script>
-        <script src="js/model/WTSLanguageSelection.js"></script>
-        <script src="js/popup.js"></script>
+        <script src="../js/provider/chromeProvider.js"></script>
+        <script src="../js/model/transcriptionButtonStatus.js"></script>
+        <script src="../js/model/language.js"></script>
+        <script src="../js/model/WTSLanguageSelection.js"></script>
+        <script src="../js/popup.js"></script>
         <iframe id ="iframe" src="https://example.com" width="1px" height="1px" allow="geolocation; microphone; camera"></iframe>
         <p>This project is a real time closed caption, made to disability people but people withou disability can use to take notes.</p>
     </body>

@@ -2,7 +2,7 @@
 
 var actionButton = document.getElementById('transcription');
 var version = document.getElementById('version')
-const localStorage = new LocalStorage(chrome)
+const localStorage = new ChromeProvider(chrome)
 const language = new Language("")
 var transcriptionButton = new TranscriptionButtonStatus()
 
