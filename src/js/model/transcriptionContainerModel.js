@@ -4,9 +4,8 @@ class TranscriptionContainerModel {
      className = "transcription-container",
      div = document.createElement('div'),
      interim_span = document.createElement('span'),
-     final_span = document.createElement('span'),
-     
-     ) {
+     final_span = document.createElement('span'),)
+      {
         this.dom = dom
         this.div = div
         this.className = className

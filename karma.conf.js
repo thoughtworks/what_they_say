@@ -4,17 +4,16 @@ module.exports = function(config) {
     browsers: ['ChromeHeadless'],
     files: [
       'src/js/model/*.js',
-      'src/js/helper/*.js',
-      'test/specs/*.js'
+      'src/js/provider/*.js'
     ],
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress'],
     preprocessors: {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'src/**/*.js': ['coverage'],
-      'src/js/content.js': ['coverage'],
-      'src/js/popup.js': ['coverage'],
+      'src/**/*.js': [],
+      'src/js/content.js': [],
+      'src/js/popup.js': [],
     },
     coverageReporter: {
       type : 'html',

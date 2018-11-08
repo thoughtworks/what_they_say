@@ -2,7 +2,7 @@ describe('Storage Tests', () => {
     var localStorage
 
     beforeEach(function() {
-          localStorage = new LocalStorage(null)
+          localStorage = new ChromeProvider(null)
           spyOn(localStorage, 'save')
           .and.callFake( function(arguments) {
                return true
