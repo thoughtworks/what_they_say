@@ -4,7 +4,7 @@ module.exports = function(config) {
     browsers: ['ChromeHeadless'],
     files: [
       'src/js/provider/*.js',
-      'src/js/model/language.js',
+      'src/js/model/*.js',
       'test/specs/**/*.js'
     ],
     reporters: ['progress'],
@@ -14,4 +14,5 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
     concurrency: Infinity
   })
+  //TODO FIND SOME COVERAGE THAT SUPORT EC6
 }
