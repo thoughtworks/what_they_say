@@ -4,25 +4,14 @@ const transcriptionClass = "transcription-container"
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
 
-var div = document.createElement('div');
-
-
-var youtubeDiv = document.createElement('div');
 var isFullScreen = false
-var youtuberContainer
-var lastTranscription = ""
 var fullTranscription = ""
 var wtkRecognition
 
 var recognizing = false;
 var ignore_onend;
 var final_transcript = '';
-var final_span = document.createElement('span');
-var interim_span = document.createElement('span');
-interim_span.id = "interim_span"
-interim_span.className = "interim"
-interim_span.id = "final_span"
-interim_span.className = "final"
+
 var first_char = /\S/;
 var two_line = /\n\n/g;
 var one_line = /\n/g;
@@ -33,6 +22,17 @@ var t3
 var silenceVerifyAverage
 var silenceTimer
 var silenceCount = 0
+
+var final_span = document.createElement('span');
+var interim_span = document.createElement('span');
+var div = document.createElement('div');
+div.appendChild(final_span)
+div.appendChild(interim_span)
+setupTranscriptionContainer(div) 
+interim_span.id = "interim_span"
+interim_span.className = "interim"
+interim_span.id = "final_span"
+interim_span.className = "final"
 
 setup()
 
@@ -46,7 +46,7 @@ chrome.runtime.onMessage.addListener(
     if (request.action == "start") {
       isStopRecognized = false
       startRecognition();
-      silenceTimer = setInterval(verifySilenceTime, 5000);
+      silenceTimer = setInterval(verifySilenceTime, 3000);
     } else if (request.action == "history") {
       generatePDF();
     } else if (request.action == "stop") {
@@ -60,8 +60,10 @@ chrome.runtime.onMessage.addListener(
 
 //callback recognition
 
+
 recognition.onstart = function() {
   console.log("onstart")
+  shouldDisplayTranscriptionContainer(true)
   recognizing = true;
 };
 
@@ -85,9 +87,7 @@ recognition.onresult = function(event) {
   t1 = performance.now();
   console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
-  if (div.scrollHeight > div.offsetHeight) {
-    div.scrollTop += 20 
-  }
+  scrollTranscriptionContainerIfNeeds()
 
 }
 
@@ -101,11 +101,11 @@ function linebreak(s) {
 
 recognition.onend = function() {
   
-
   if (!isStopRecognized) {
     recognition.start()
   } else {
     recognition.stop()
+    shouldDisplayTranscriptionContainer(false)
   }
 
   console.log("onend")
@@ -152,25 +152,13 @@ function setup() {
   addJsModule()
   recognition.continuous = true;
   recognition.interimResults = true;
-  addClass(div, transcriptionClass)
-  setYoutubeDivStyle()
   setLanguague()
   silenceTimer = setInterval(verifySilenceTime, 5000);
 }
 
 function startRecognition() {
   setLanguague()
-  div.appendChild(final_span)
-  div.appendChild(interim_span)
-  document.body.appendChild(div)
   recognition.start();
-}
-
-function setYoutubeDivStyle() {
-  var height = window.innerHeight * 0.9
-  youtubeDiv.classList.add("transcription-container");
-  youtubeDiv.classList.add("transcription-container-fullscreen");
-  youtubeDiv.style.top = height.toString() + "px"
 }
 
 function generatePDF() {
@@ -211,14 +199,6 @@ function setFullScreenHandler() {
     isFullScreen = true
   } else if (document.webkitIsFullScreen === false) {
     isFullScreen = false
-  }
-}
-
-function setYoutubeFullScreenCaptions() {
-  youtuberContainer = document.getElementsByClassName("html5-video-container")
-
-  if (youtuberContainer) {
-    youtuberContainer[0].appendChild(youtubeDiv);
   }
 }
 
@@ -277,4 +257,18 @@ function verifySilenceTime() {
 
   t2 = t0
   t3 = t1
+}
+
+function shouldDisplayTranscriptionContainer(boolean) {
+  if(!document.body.contains(div) && boolean) {
+    document.body.appendChild(div)
+  } else if (document.body.contains(div) && !boolean) {
+    document.body.removeChild(div)
+  }
+}
+
+function scrollTranscriptionContainerIfNeeds() {
+  if (div.scrollHeight > div.offsetHeight) {
+    div.scrollTop += 20 
+  }
 }
