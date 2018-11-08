@@ -153,7 +153,7 @@ function setup() {
   recognition.continuous = true;
   recognition.interimResults = true;
   setLanguague()
-  silenceTimer = setInterval(verifySilenceTime, 5000);
+  silenceTimer = setInterval(verifySilenceTime, 3000);
 }
 
 function startRecognition() {
@@ -248,7 +248,7 @@ function verifySilenceTime() {
     console.log("adicionando count")
     silenceCount++
     clearInterval(silenceTimer);
-    silenceTimer = setInterval(verifySilenceTime, 5000);
+    silenceTimer = setInterval(verifySilenceTime, 3000);
   } else {
     console.log(t0)
     console.log(t1)
