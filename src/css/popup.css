@@ -107,6 +107,26 @@ button:focus {
     object-fit: contain;
   }
 
+  .play-circle-start {
+      content: url("../img/wts-player-play.svg")
+  }
+
+  .play-circle-pause {
+    content: url("../img/wts-player-pause.svg")
+  }
+
+  .play-circle-stop {
+    content: url("../img/wts-player-stop.svg")
+  }
+
+  .play-circle-record {
+    content: url("../img/wts-player-rec.svg")
+  }
+
+img.play-circle:hover {
+    cursor: pointer;
+}
+
   .play-image-text-group {
     display: flex;
     align-items:center;

@@ -129,6 +129,7 @@ recognition.onend = function() {
     return;
   }
   if (window.getSelection) {
+    //TODO Entender esse código antes de apagar
     // window.getSelection().removeAllRanges();
     // var range = document.createRange();
     // range.selectNode(document.getElementById('final_span'));

@@ -37,5 +37,8 @@
       ],
       "all_frames": true
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["src/js/background.js"]
+  }
 }

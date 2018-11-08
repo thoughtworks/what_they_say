@@ -16,20 +16,20 @@
                 <div class="play-group">
                     <div class="play-container">
                         <div class="play-image-text-group">
-                            <img src="../img/wts-player-play.svg" class="play-circle">
-                            <span> Play </span>
+                            <img id ="play-circle-transcription" class="play-circle play-circle-start">
+                            <span id ="play-title-transcription"> Play </span>
                         </div>
                     </div>
                     <div class="play-container">
                         <div class="play-image-text-group">
-                            <img src="../img/wts-player-stop.svg" class="play-circle">
-                            <span> Stop </span>
+                            <img id ="stop-circle-transcription" class="play-circle play-circle-stop">
+                            <span id ="stop-title-transcription"> Stop </span>
                         </div>
                     </div>
                     <div class="play-container">
                         <div class="play-image-text-group">
-                            <img src="../img/wts-player-rec.svg" class="play-circle-record">
-                            <span class="play-timer"> 00:04 </span>
+                            <img class="play-circle-record">
+                            <span id="record-title-transcription" class="play-timer"> 00:00 </span>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,6 @@
             </div>
         </div>
         <i id="version">Version: </i>
-        <button type="button" id="transcription" class="start"> <i class="fa fa-closed-captioning"> </i> Transcription</button>
         <button type="button" id="history"> <i class="fa fa-clock"></i> History </button>
         <script src="../js/provider/chromeProvider.js"></script>
         <script src="../js/model/transcriptionButtonStatus.js"></script>

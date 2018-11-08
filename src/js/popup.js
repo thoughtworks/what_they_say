@@ -1,14 +1,31 @@
-// - properties -
-
-var actionButton = document.getElementById('transcription');
-var version = document.getElementById('version')
 const localStorage = new ChromeProvider(chrome)
 const language = new Language("")
+
+
+
+
+var bkg = chrome.extension.getBackgroundPage();
+console.log(bkg);
+console.log(bkg.jackson)
+// bkg.console.log('foo');
+
+// - properties -
+
+var playButton = document.getElementById('play-circle-transcription');
+var playTitle = document.getElementById('play-title-transcription');
+
+var stopButton = document.getElementById('stop-circle-transcription');
+var stopTitle = document.getElementById('stop-title-transcription');
+
+var recordButton = document.getElementById('record-circle-transcription');
+var recordTitle = document.getElementById('record-title-transcription');
+
+var version = document.getElementById('version')
 var transcriptionButton = new TranscriptionButtonStatus()
 
 // - on load -
 
-actionButton.onclick = didTapTranscriptionButton;
+playButton.onclick = didTapTranscriptionButton;
 document.getElementById('history').onclick = sendHistoryMessageTab;
 
 window.addEventListener("DOMContentLoaded", function() {
@@ -37,28 +54,18 @@ function loadButtonStatus() {
 }
 
 function setTranscriptionButtonSkin() {
-  var i,text,iclass
-
   if (!transcriptionButton.action) {
-    actionButton.textContent = ""
-    actionButton.className = "stop"
-    
-    iclass = 'fa fa-stop';
-    i = document.createElement('I');
-    text = document.createTextNode("Stop"); 
-    i.className = iclass;
+    playButton.classList.remove("play-circle-start");
+    playButton.classList.add("play-circle-pause")
+    playTitle.textContent = "Pause"
+    bkg.setTimer(true)
   } else {
-    actionButton.textContent = ""
-    actionButton.className = "start"
-    
-    iclass = 'fa fa-closed-captioning'
-    i = document.createElement('I');
-    text = document.createTextNode("Transcription"); 
-    i.className = iclass;
+    bkg.setTimer(false)
+    recordTitle.textContent = "00:00"
+    playButton.classList.remove("play-circle-pause");
+    playButton.classList.add("play-circle-start")
+    playTitle.textContent = "Start"
   }
-
-  actionButton.appendChild(i);
-  actionButton.appendChild(text);
 }
 
 function didTapTranscriptionButton() {
@@ -103,3 +110,20 @@ function saveLanguageStatus(language) {
 function saveTranscriptionButtonAction() {
   localStorage.save(transcriptionButton, function(){})
 }
+
+var responsetimer = setInterval(function(){
+  time = bkg.time
+  var displaySeconds = time.s
+  var displayMinutes = time.m
+
+  if (time.s < 10) {
+    displaySeconds = "0" + time.s.toString()
+  }
+
+  if (time.m < 10) {
+    displayMinutes = "0" + time.m.toString()
+  }
+
+  var newTime =  displayMinutes + ":" + displaySeconds;
+  recordTitle.textContent = newTime
+}, 1000);
