@@ -93,6 +93,14 @@ button:focus {
     color: #ffffff;
   }
 
+  .wts_logo {
+    width: 53px;
+    height: 48px;
+    text-align: center;
+    margin: 16px;
+    content: url("../img/wts-logo.svg")
+  }
+  
   .play-group {
     display: flex;
     align-items:center;
