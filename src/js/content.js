@@ -81,33 +81,17 @@ recognition.onresult = function(event) {
   }
   final_transcript = capitalize(final_transcript);
 
-  console.log("----")
-  console.log("last")
-  console.log(lastInterimTranscription)
-  console.log("----")
-
-  console.log(interim_transcript)
-  console.log(linebreak(combined_interim_transcript))
-
   combined_interim_transcript = lastInterimTranscription + " " + interim_transcript
   combined_final_transcript = lastFinalTranscription + " " + final_transcript
   container.final_span.innerHTML = linebreak(combined_final_transcript);
   container.interim_span.innerHTML = linebreak(combined_interim_transcript);
-  console.log("combined")
-  console.log(combined_interim_transcript)
-  console.log("----")
 
   if (combined_final_transcript && combined_interim_transcript 
     && combined_final_transcript != "" && combined_interim_transcript != "" ) {
     actualFinalTranscription = combined_final_transcript
     actualInterimTranscription = combined_interim_transcript
   }
-
-  console.log("actual")
-  console.log(actualInterimTranscription)
-  console.log("----")
-
-
+  
   t1 = performance.now();
   container.scrollIfNeeds()
 
@@ -122,21 +106,14 @@ function linebreak(s) {
 }
 
 recognition.onend = function() {
-  console.log("ta nuelo ?")
-  console.log(actualFinalTranscription)
-  console.log("----")
 
   lastInterimTranscription = actualInterimTranscription
   lastFinalTranscription = actualFinalTranscription
-  console.log("last")
-  console.log(lastInterimTranscription)
-  console.log("----")
   
   if (!isStopRecognized) {
 
     recognition.start()
   } else {
-    console.log("PAAAAARAAAAA")
     recognition.stop()
     setupInstance()
     container.shouldDisplay(false)
