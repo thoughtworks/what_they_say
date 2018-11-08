@@ -1,13 +1,7 @@
 const localStorage = new ChromeProvider(chrome)
 const language = new Language("")
 
-
-
-
 var bkg = chrome.extension.getBackgroundPage();
-console.log(bkg);
-console.log(bkg.jackson)
-// bkg.console.log('foo');
 
 // - properties -
 
@@ -25,8 +19,9 @@ var transcriptionButton = new TranscriptionButtonStatus()
 
 // - on load -
 
-playButton.onclick = didTapTranscriptionButton;
 document.getElementById('history').onclick = sendHistoryMessageTab;
+playButton.onclick = didTapTranscriptionButton;
+stopButton.onclick = didTapStopButton;
 
 window.addEventListener("DOMContentLoaded", function() {
   viewLoadSetup()
@@ -82,7 +77,7 @@ function sendStartStopTranscriptionMessageContent() {
 }
 
 function getMessageActionButton() {
-  return transcriptionButton.action ? "start" : "stop"
+  return transcriptionButton.action ? "start" : "pause"
 }
 
 function updateTranscriptionButton() {
@@ -111,6 +106,19 @@ function saveTranscriptionButtonAction() {
   localStorage.save(transcriptionButton, function(){})
 }
 
+function didTapStopButton() {
+
+  if (!transcriptionButton.action) {
+    updateTranscriptionButton()
+  }
+
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {action: "stop"}, {});
+  });
+}
+
+// timer
+
 var responsetimer = setInterval(function(){
   time = bkg.time
   var displaySeconds = time.s
@@ -127,3 +135,4 @@ var responsetimer = setInterval(function(){
   var newTime =  displayMinutes + ":" + displaySeconds;
   recordTitle.textContent = newTime
 }, 1000);
+

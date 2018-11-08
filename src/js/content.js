@@ -3,6 +3,7 @@ var container
 
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
+var isDeleteTranscriptionHistory = false
 
 var isFullScreen = false
 var history = ""
@@ -42,14 +43,29 @@ chrome.runtime.onMessage.addListener(
 
     if (request.action == "start") {
       isStopRecognized = false
+      isDeleteTranscriptionHistory = false
       startRecognition();
       silenceTimer = setInterval(verifySilenceTime, 3000);
     } else if (request.action == "history") {
       generatePDF();
-    } else if (request.action == "stop") {
+    } else if (request.action == "pause") {
+      console.log("pause")
       isStopRecognized = true
       recognition.stop();
       clearInterval(silenceTimer);
+    } else if (request.action == "stop") {
+      console.log("stop")
+      isStopRecognized = true
+      isDeleteTranscriptionHistory = true
+      recognition.stop();
+      combined_final_transcript = ""
+      combined_interim_transcript = ""
+      lastFinalTranscription = ""
+      lastInterimTranscription = ""
+      actualFinalTranscription = ""
+      actualInterimTranscription = ""
+      container.interim_span.innerHTML = ""
+      container.final_span.innerHTML = ""
     } else if (request.language) {
       recognition.lang = request.language;
     }
@@ -107,11 +123,12 @@ function linebreak(s) {
 
 recognition.onend = function() {
 
-  lastInterimTranscription = actualInterimTranscription
-  lastFinalTranscription = actualFinalTranscription
+  if (!isDeleteTranscriptionHistory) {
+    lastInterimTranscription = actualInterimTranscription
+    lastFinalTranscription = actualFinalTranscription
+  }
   
   if (!isStopRecognized) {
-
     recognition.start()
   } else {
     recognition.stop()
