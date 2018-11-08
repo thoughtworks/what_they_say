@@ -9,10 +9,8 @@ class TranscriptionContainerModel {
         this.dom = dom
         this.div = div
         this.className = className
-        this.transcriptionClass = transcriptionClass
         this.interim_span = interim_span
         this.final_span = final_span
-        console.log(dom)
 
         this.interim_span.id = "interim_span"
         this.interim_span.className = "interim"

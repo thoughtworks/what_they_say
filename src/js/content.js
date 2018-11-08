@@ -1,11 +1,11 @@
 //setup
-const container
+var container
 
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
 
 var isFullScreen = false
-var fullTranscription = ""
+var history = ""
 
 var recognizing = false;
 var ignore_onend;
@@ -21,6 +21,14 @@ var t3
 var silenceVerifyAverage
 var silenceTimer
 var silenceCount = 0
+
+var actualFinalTranscription = ""
+var actualInterimTranscription = ""
+var lastFinalTranscription = ""
+var lastInterimTranscription = ""
+var combined_interim_transcript = ""
+var combined_final_transcript = ""
+
 
 
 setup()
@@ -72,12 +80,35 @@ recognition.onresult = function(event) {
     }
   }
   final_transcript = capitalize(final_transcript);
-  container.final_span.innerHTML = linebreak(final_transcript);
-  container.interim_span.innerHTML = linebreak(interim_transcript);
+
+  console.log("----")
+  console.log("last")
+  console.log(lastInterimTranscription)
+  console.log("----")
+
+  console.log(interim_transcript)
+  console.log(linebreak(combined_interim_transcript))
+
+  combined_interim_transcript = lastInterimTranscription + " " + interim_transcript
+  combined_final_transcript = lastFinalTranscription + " " + final_transcript
+  container.final_span.innerHTML = linebreak(combined_final_transcript);
+  container.interim_span.innerHTML = linebreak(combined_interim_transcript);
+  console.log("combined")
+  console.log(combined_interim_transcript)
+  console.log("----")
+
+  if (combined_final_transcript && combined_interim_transcript 
+    && combined_final_transcript != "" && combined_interim_transcript != "" ) {
+    actualFinalTranscription = combined_final_transcript
+    actualInterimTranscription = combined_interim_transcript
+  }
+
+  console.log("actual")
+  console.log(actualInterimTranscription)
+  console.log("----")
+
 
   t1 = performance.now();
-  console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-
   container.scrollIfNeeds()
 
 }
@@ -91,13 +122,23 @@ function linebreak(s) {
 }
 
 recognition.onend = function() {
+  console.log("ta nuelo ?")
+  console.log(actualFinalTranscription)
+  console.log("----")
+
+  lastInterimTranscription = actualInterimTranscription
+  lastFinalTranscription = actualFinalTranscription
+  console.log("last")
+  console.log(lastInterimTranscription)
+  console.log("----")
   
   if (!isStopRecognized) {
+
     recognition.start()
   } else {
+    console.log("PAAAAARAAAAA")
     recognition.stop()
     setupInstance()
-    console.log(container)
     container.shouldDisplay(false)
   }
 
@@ -111,10 +152,10 @@ recognition.onend = function() {
     return;
   }
   if (window.getSelection) {
-    window.getSelection().removeAllRanges();
-    var range = document.createRange();
-    range.selectNode(document.getElementById('final_span'));
-    window.getSelection().addRange(range);
+    // window.getSelection().removeAllRanges();
+    // var range = document.createRange();
+    // range.selectNode(document.getElementById('final_span'));
+    // window.getSelection().addRange(range);
   }
 };
 
@@ -170,7 +211,7 @@ function generatePDF() {
 
       lines = doc.setFont(font[0], font[1])
         .setFontSize(size)
-        .splitTextToSize(wtkRecognition.history, 7.5)
+        .splitTextToSize(history, 7.5)
 
       doc.text(0.5, verticalOffset + size / 72, lines)
 
@@ -198,7 +239,6 @@ function setFullScreenHandler() {
 function setLanguague() {
   chrome.storage.local.get(["language"], function (languageName) {
     recognition.lang = convertLanguageNameToCode(getCurrentLanguague(languageName.language))
-    console.log(recognition.lang)
   });
 }
 
@@ -229,22 +269,16 @@ function verifySilenceTime() {
     return
   }
 
-  console.log("timer")
-
 
   if (silenceCount >= 1) {
-    console.log("reniciando")
     recognition.stop()
   }
 
   if (t0 == t2 && t1 == t3) {
-    console.log("adicionando count")
     silenceCount++
     clearInterval(silenceTimer);
     silenceTimer = setInterval(verifySilenceTime, 3000);
   } else {
-    console.log(t0)
-    console.log(t1)
     silenceCount = 0
   }
 
