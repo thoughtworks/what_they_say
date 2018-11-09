@@ -32,3 +32,43 @@
   z-index:  10000;
   font-family:  "Arial";
 }
+
+.increase-level-2 {
+  height: 40px !important;
+}
+
+.increase-level-3 {
+  height: 60px;
+}
+
+.increase-level-4 {
+  height: 80px;
+}
+
+.increase-level-5 {
+  height: 100px;
+}
+
+.increase-level-4 {
+  height: 120px;
+}
+
+.increase-level-7 {
+  height: 140px;
+}
+
+.increase-level-8 {
+  height: 160px;
+}
+
+.increase-level-9 {
+  height: 180px;
+}
+
+.increase-level-10 {
+  height: 200;
+}
+
+.increase-level-11 {
+  height: 220;
+}

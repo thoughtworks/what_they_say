@@ -38,3 +38,11 @@ function setTimer(boolean) {
       }
   }
 
+  function increase() {
+    console.log()
+    chrome.browserAction.onClicked.addListener(function(tab) {
+      chrome.tabs.executeScript(null,
+                               {code:"document.getElementById('transcription-container').style.height += 20"});
+    });
+  }
+

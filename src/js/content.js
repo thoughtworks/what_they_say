@@ -29,6 +29,7 @@ var lastFinalTranscription = ""
 var lastInterimTranscription = ""
 var combined_interim_transcript = ""
 var combined_final_transcript = ""
+var numberHeight = 40
 
 
 
@@ -68,6 +69,12 @@ chrome.runtime.onMessage.addListener(
       container.final_span.innerHTML = ""
     } else if (request.language) {
       recognition.lang = request.language;
+    } else if (request.action == "increase") {
+      console.log("increase")
+      container.increase()
+    } else if (request.action == "decrease") {
+      console.log("decrease")
+      container.decrease()
     }
   });
 
@@ -181,6 +188,7 @@ function setup() {
   addJsModule()
   recognition.continuous = true;
   recognition.interimResults = true;
+  setHeightContainer()
   setLanguague()
   silenceTimer = setInterval(verifySilenceTime, 3000);
 }
@@ -237,6 +245,15 @@ function setLanguague() {
   });
 }
 
+function setHeightContainer() {
+  chrome.storage.local.get(["numberHeight"], function (response) {
+    if (response.numberHeight) {
+      console.log(response)
+      numberHeight = response.numberHeight
+    }
+  });
+}
+
 function addJsModule() {
   const script = document.createElement('script');
   const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
@@ -290,6 +307,6 @@ function getCurrentLanguague(language) {
 
 function setupInstance() {
   if (!container) {
-    container = new TranscriptionContainerModel(document)
+    container = new TranscriptionContainerModel(document,numberHeight)
   }
 }

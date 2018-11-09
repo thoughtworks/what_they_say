@@ -14,6 +14,11 @@ var stopTitle = document.getElementById('stop-title-transcription');
 var recordButton = document.getElementById('record-circle-transcription');
 var recordTitle = document.getElementById('record-title-transcription');
 
+var increaseButton = document.getElementById('wts-increase-line-img');
+var decreaseButton = document.getElementById('wts-decrease-line-img');
+var numberLabel = document.getElementById('wts-menu-input-number')
+var numberHeight = 40
+
 var version = document.getElementById('version')
 var transcriptionButton = new TranscriptionButtonStatus()
 
@@ -22,6 +27,9 @@ var transcriptionButton = new TranscriptionButtonStatus()
 document.getElementById('history').onclick = sendHistoryMessageTab;
 playButton.onclick = didTapTranscriptionButton;
 stopButton.onclick = didTapStopButton;
+increaseButton.onclick = didTapIncreaseButton;
+decreaseButton.onclick = didTapDecreaseButton;
+
 
 window.addEventListener("DOMContentLoaded", function() {
   viewLoadSetup()
@@ -33,6 +41,7 @@ function viewLoadSetup() {
   version.textContent += chrome.runtime.getManifest().version
   loadButtonStatus()
   loadLanguageSelection()
+  loadHeightContainer()
 }
 
 function loadLanguageSelection() {
@@ -45,6 +54,22 @@ function loadButtonStatus() {
   localStorage.get("action", function(response) {
     transcriptionButton.action =  response.action == null ? true : response.action
     setTranscriptionButtonSkin()
+  })
+}
+
+function loadHeightContainer() {
+  chrome.storage.local.get(["numberHeight"], function (response) {
+    if (response.numberHeight) {
+      console.log(response)
+      numberHeight = response.numberHeight
+      numberLabel.textContent = (numberHeight/20).toString() 
+    }
+  });
+}
+
+function saveNumberHeight() {
+  localStorage.get("numberHeight", function(response) {
+    numberHeight =  response.numberHeight == null ? 40 : response.numberHeight
   })
 }
 
@@ -106,6 +131,10 @@ function saveTranscriptionButtonAction() {
   localStorage.save(transcriptionButton, function(){})
 }
 
+function saveNumberHeight() {
+  localStorage.save({numberHeight : numberHeight}, function(){})
+}
+
 function didTapStopButton() {
 
   if (!transcriptionButton.action) {
@@ -114,6 +143,33 @@ function didTapStopButton() {
 
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {action: "stop"}, {});
+  });
+}
+
+function didTapIncreaseButton() {
+  
+  if (numberHeight <= 200) {
+    numberHeight += 20
+  }
+
+  saveNumberHeight()
+  numberLabel.textContent = (numberHeight / 20).toString()
+
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {action: "increase"}, {});
+  });
+}
+
+function didTapDecreaseButton() {
+  if (numberHeight >= 60) {
+    numberHeight -= 20
+  }
+
+  saveNumberHeight()
+  numberLabel.textContent = (numberHeight / 20).toString()
+
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {action: "decrease"}, {});
   });
 }
 
@@ -136,3 +192,8 @@ var responsetimer = setInterval(function(){
   recordTitle.textContent = newTime
 }, 1000);
 
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(request)
+  }
+);
