@@ -163,7 +163,7 @@ img.play-circle:hover {
     display: block;
     width: 400px;
     height: 213px;
-    box-shadow: 0 0 0 1px #e6e6e6;
+    box-shadow:  inset 0 1px 0px 0px #e6e6e6;
     background-color: #ffffff;
 }
 
