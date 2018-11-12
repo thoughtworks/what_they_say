@@ -53,15 +53,22 @@
                 <Label class="wts-menu-input-number" id="wts-menu-input-number" >2</Label>
                 <img src="../img/wts-menu-plus.svg" id="wts-increase-line-img" class="play-circle">
             </div>
+            <div class="wts-menu-history" >
+                <Label class="wts-menu-group-label" style="width:160px">Previous transcriptions</Label>
+                <img src="../img/wts-menu-history-last.svg" id="history" style="padding-left:140px" class="play-circle">
+            </div>
+            <div class="wts-menu-feedback-history">
+                <label id="version" class="wts-menu-group-label" style="width: 150px" >v</label>
+                <label class="wts-menu-group-label"  style="width: 250px">Feel free to give us some <a style="font-weight: bold; color: #eb3e4a" href="https://media.giphy.com/media/EIiJp9cQ3GeEU/giphy.gif" target="_blank">feedback</a></label>
+            </div>
         </div>
-        <i id="version">Version: </i>
-        <button type="button" id="history"> <i class="fa fa-clock"></i> History </button>
+        
         <script src="../js/provider/chromeProvider.js"></script>
         <script src="../js/model/transcriptionButtonStatus.js"></script>
         <script src="../js/model/language.js"></script>
         <script src="../js/model/WTSLanguageSelection.js"></script>
         <script src="../js/popup.js"></script>
         <iframe id ="iframe" src="https://example.com" width="1px" height="1px" allow="geolocation; microphone; camera"></iframe>
-        <p>This project is a real time closed caption, made to disability people but people withou disability can use to take notes.</p>
+        <!-- <p>This project is a real time closed caption, made to disability people but people withou disability can use to take notes.</p> -->
     </body>
 </html>

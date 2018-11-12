@@ -208,13 +208,14 @@ function generatePDF() {
 
 
   for (var i in fonts) {
+    console.log(combined_final_transcript)
     if (fonts.hasOwnProperty(i)) {
       font = fonts[i]
       size = sizes[i]
 
       lines = doc.setFont(font[0], font[1])
         .setFontSize(size)
-        .splitTextToSize(history, 7.5)
+        .splitTextToSize(combined_interim_transcript, 7.5)
 
       doc.text(0.5, verticalOffset + size / 72, lines)
 

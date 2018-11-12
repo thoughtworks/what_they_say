@@ -1,6 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
-
-
 body {
     min-width: 300px;
     margin: 0;
@@ -36,7 +34,6 @@ button:focus {
     outline: none;
 }
 
-
 .start.active {
     background: #7cb342;
     color: white;
@@ -57,7 +54,7 @@ button:focus {
 
 .title-version {
     margin: 0;
-} 
+}
 
 .bound {
     width: 400px;
@@ -65,21 +62,21 @@ button:focus {
     border-radius: 4px;
     background-color: #ffffff;
     display: flex
-  }
+}
 
-  .player-logo {
-      width: 80px;
-      height: 80px;
-  }
+.player-logo {
+    width: 80px;
+    height: 80px;
+}
 
 .blue_bg {
     float: right;
     width: 315px;
     height: 80px;
     background-color: #0f1e32;
-  }
+}
 
-  .blue_bg span {
+.blue_bg span {
     margin-left: 8px;
     width: 37px;
     height: 15px;
@@ -91,56 +88,56 @@ button:focus {
     line-height: normal;
     letter-spacing: normal;
     color: #ffffff;
-  }
+}
 
-  .wts_logo {
+.wts_logo {
     width: 53px;
     height: 48px;
     text-align: center;
     margin: 16px;
     content: url("../img/wts-logo.svg")
-  }
-  
-  .play-group {
+}
+
+.play-group {
     display: flex;
-    align-items:center;
+    align-items: center;
     padding-left: 16px;
     width: 100%;
     height: 100%;
-  }
+}
 
-  .play-circle {
+.play-circle {
     width: 24px;
     height: 24px;
     object-fit: contain;
-  }
+}
 
-  .play-circle-start {
-      content: url("../img/wts-player-play.svg")
-  }
+.play-circle-start {
+    content: url("../img/wts-player-play.svg")
+}
 
-  .play-circle-pause {
+.play-circle-pause {
     content: url("../img/wts-player-pause.svg")
-  }
+}
 
-  .play-circle-stop {
+.play-circle-stop {
     content: url("../img/wts-player-stop.svg")
-  }
+}
 
-  .play-circle-record {
+.play-circle-record {
     content: url("../img/wts-player-rec.svg")
-  }
+}
 
 img.play-circle:hover {
     cursor: pointer;
 }
 
-  .play-image-text-group {
+.play-image-text-group {
     display: flex;
-    align-items:center;
-  }
+    align-items: center;
+}
 
-  .play-timer {
+.play-timer {
     width: 42px;
     height: 18px;
     font-family: Montserrat;
@@ -152,32 +149,25 @@ img.play-circle:hover {
     letter-spacing: normal;
     text-align: right;
     color: #ffffff;
-  }
+}
 
-  .play-circle-record {
+.play-circle-record {
     margin-left: 88px;
     width: 4px;
     height: 4px;
     object-fit: contain;
-  }
-  .wts_logo {
-    width: 53px;
-    height: 48px;
-    text-align: center;
-    margin: 16px;
-  }
-  
+}
 
-  .wts-menu-group {
-      position: relative;
-      display: block;
-      width: 400px;
-      height: 112px;
-      box-shadow: 0 1px 0 0 #e6e6e6;
-      background-color: #ffffff;
-  }
+.wts-menu-group {
+    position: relative;
+    display: block;
+    width: 400px;
+    height: 213px;
+    box-shadow: 0 0 0 1px #e6e6e6;
+    background-color: #ffffff;
+}
 
-  .wts-menu-group-label {
+.wts-menu-group-label {
     padding-left: 16px;
     width: 62px;
     height: 15px;
@@ -189,33 +179,49 @@ img.play-circle:hover {
     line-height: normal;
     letter-spacing: normal;
     color: #0f1e32;
-    }
+}
 
-    .wts-menu-language {
+.wts-menu-language {
     display: flex;
     width: 100%;
     height: 56px;
-    align-items:center;
-    }
+    align-items: center;
+    box-shadow: 0 1px 0 0 #e6e6e6;
+}
 
-    .wts-menu-lines {
-        display: flex;
-        width: 100%;
-        height: 56px;
-        align-items:center;
-        }
+.wts-menu-lines {
+    display: flex;
+    width: 100%;
+    height: 56px;
+    align-items: center;
+    box-shadow: 0 1px 0 0 #e6e6e6;
+}
 
-        .wts-menu-input-number {
-            width: 25px;
-            height: 18px;
-            font-family: Montserrat;
-            font-size: 14px;
-            font-weight: bold;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: normal;
-            text-align: center;
-            color: #0f1e32;
-        }
+.wts-menu-input-number {
+    width: 25px;
+    height: 18px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #0f1e32;
+}
 
+.wts-menu-history {
+    display: flex;
+    width: 100%;
+    height: 56px;
+    align-items: center;
+    box-shadow: 0 1px 0 0 #e6e6e6;
+}
+
+.wts-menu-feedback-history {
+    display: flex;
+    width: 100%;
+    height: 56px;
+    align-items: center;
+}
