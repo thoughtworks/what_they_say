@@ -148,17 +148,6 @@ recognition.onend = function() {
   if (ignore_onend) {
     return;
   }
-
-  if (!final_transcript) {
-    return;
-  }
-  if (window.getSelection) {
-    //TODO Entender esse código antes de apagar
-    // window.getSelection().removeAllRanges();
-    // var range = document.createRange();
-    // range.selectNode(document.getElementById('final_span'));
-    // window.getSelection().addRange(range);
-  }
 };
 
 recognition.onerror = function(event) {
