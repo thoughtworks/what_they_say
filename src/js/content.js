@@ -104,8 +104,6 @@ recognition.onresult = function(event) {
   }
   final_transcript = capitalize(final_transcript);
 
-  console.log(interim_transcript)
-
   combined_interim_transcript = lastInterimTranscription + " " + interim_transcript
   combined_final_transcript = lastFinalTranscription + " " + final_transcript
   container.final_span.innerHTML = linebreak(combined_final_transcript);
@@ -236,7 +234,6 @@ function setLanguague() {
 function setHeightContainer() {
   chrome.storage.local.get(["numberHeight"], function (response) {
     if (response.numberHeight) {
-      console.log(response)
       numberHeight = response.numberHeight
     }
   });

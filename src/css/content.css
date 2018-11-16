@@ -34,7 +34,7 @@
 }
 
 .increase-level-2 {
-  height: 40px !important;
+  height: 40px;
 }
 
 .increase-level-3 {
@@ -49,7 +49,7 @@
   height: 100px;
 }
 
-.increase-level-4 {
+.increase-level-6 {
   height: 120px;
 }
 
@@ -66,9 +66,9 @@
 }
 
 .increase-level-10 {
-  height: 200;
+  height: 200px;
 }
 
 .increase-level-11 {
-  height: 220;
+  height: 220px;
 }
