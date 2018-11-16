@@ -97,27 +97,25 @@ recognition.onresult = function(event) {
 
   for (var i = event.resultIndex; i < event.results.length; ++i) {
     if (event.results[i].isFinal) {
-      final_transcript += event.results[i][0].transcript;
+      // final_transcript += event.results[i][0].transcript;
     } else {
       interim_transcript += event.results[i][0].transcript;
     }
   }
   final_transcript = capitalize(final_transcript);
 
+  console.log(interim_transcript)
+
   combined_interim_transcript = lastInterimTranscription + " " + interim_transcript
   combined_final_transcript = lastFinalTranscription + " " + final_transcript
   container.final_span.innerHTML = linebreak(combined_final_transcript);
   container.interim_span.innerHTML = linebreak(combined_interim_transcript);
 
-  if (combined_final_transcript && combined_interim_transcript 
-    && combined_final_transcript != "" && combined_interim_transcript != "" ) {
-    actualFinalTranscription = combined_final_transcript
-    actualInterimTranscription = combined_interim_transcript
-  }
+  actualFinalTranscription = combined_final_transcript
+  actualInterimTranscription = combined_interim_transcript
   
   t1 = performance.now();
   container.scrollIfNeeds()
-
 }
 
 function capitalize(s) {
