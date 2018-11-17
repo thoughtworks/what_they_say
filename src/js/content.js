@@ -80,7 +80,6 @@ chrome.runtime.onMessage.addListener(
 
 //callback recognition
 
-
 recognition.onstart = function() {
   console.log("onstart")
   
@@ -98,22 +97,35 @@ recognition.onresult = function(event) {
   for (var i = event.resultIndex; i < event.results.length; ++i) {
     if (event.results[i].isFinal) {
       final_transcript += event.results[i][0].transcript;
-    } else {
+    } else if (event.results[i][0].confidence >= 0.6) {
       interim_transcript += event.results[i][0].transcript;
     }
   }
-  final_transcript = capitalize(final_transcript);
 
   combined_interim_transcript = lastInterimTranscription + " " + interim_transcript
+
+    //teste
+
+    if (combined_interim_transcript == actualInterimTranscription ) {
+      console.log("some error is happening, and i need to understand and solve this, please stop and continue")
+      return
+    }
+
+    //
+
+
   combined_final_transcript = lastFinalTranscription + " " + final_transcript
-  container.final_span.innerHTML = linebreak(combined_final_transcript);
-  container.interim_span.innerHTML = linebreak(combined_interim_transcript);
+  container.final_span.innerHTML = combined_final_transcript;
+
+  container.interim_span.innerHTML = combined_interim_transcript;
 
   actualFinalTranscription = combined_final_transcript
   actualInterimTranscription = combined_interim_transcript
   
   t1 = performance.now();
   container.scrollIfNeeds()
+
+  //
 }
 
 function capitalize(s) {
@@ -147,8 +159,6 @@ recognition.onend = function() {
 };
 
 recognition.onerror = function(event) {
-  isStopRecognized = true
-
   console.log("onerror")
   if (event.error == 'no-speech') {
     console.log("no-speech")
@@ -161,10 +171,11 @@ recognition.onerror = function(event) {
   }
   if (event.error == 'not-allowed') {
     console.log("not-allowed")
+    isStopRecognized = true
     recognition.stop()
     ignore_onend = true;
-    
   }
+  isStopRecognized = false
 };
 
 //functions
