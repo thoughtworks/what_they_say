@@ -1,6 +1,6 @@
 describe('Transcription Tests', () => {
-    
-    fit('should return example two transcript', () => {
+
+    it('should return example two transcript', () => {
         transcriptionManager = new TranscriptionManager()
         transcriptionManager.add("hoje eu")
         transcriptionManager.finishTranscription()

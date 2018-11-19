@@ -26,7 +26,6 @@ class TranscriptionManager {
         var text = ""
         
         for (var i = 0; i < this.allResults.length; i++ ) {
-            console.log(i <= this.allResults.length - 1)
             if (this.allResults[i] != null) {
                 text += this.allResults[i]
                 if (i < this.allResults.length - 1) {
