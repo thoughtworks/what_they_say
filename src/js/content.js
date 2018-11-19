@@ -10,9 +10,6 @@ var history = ""
 
 var recognizing = false;
 var ignore_onend;
-// var final_transcript = '';
-var history
-
 var first_char = /\S/;
 var two_line = /\n\n/g;
 var one_line = /\n/g;
@@ -87,7 +84,6 @@ recognition.onresult = function(event) {
 
   for (var i = event.resultIndex; i < event.results.length; ++i) {
     if (event.results[i].isFinal) {
-      // final_transcript += event.results[i][0].transcript;
       manager.finishTranscription()
       history += event.results[i][0].transcript;
     } else if (event.results[i][0].confidence >= 0.6) {
@@ -95,7 +91,6 @@ recognition.onresult = function(event) {
     }
   }
 
-  // container.final_span.innerHTML = final_transcript
   container.interim_span.innerHTML = manager.getAll();
   
   t1 = performance.now();
