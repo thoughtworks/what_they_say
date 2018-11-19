@@ -5,6 +5,7 @@ module.exports = function(config) {
     files: [
       'src/js/provider/*.js',
       'src/js/model/*.js',
+      'src/js/presenter/*.js',
       'test/specs/**/*.js'
     ],
     reporters: ['progress'],

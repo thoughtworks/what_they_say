@@ -23,6 +23,7 @@
   "content_scripts": [
     {
       "js": [
+        "src/js/presenter/transcriptionManager.js",
         "src/js/model/transcriptionContainerModel.js",
         "src/js/provider/chromeProvider.js",
         "src/js/model/language.js",

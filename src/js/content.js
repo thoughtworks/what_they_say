@@ -10,7 +10,8 @@ var history = ""
 
 var recognizing = false;
 var ignore_onend;
-var final_transcript = '';
+// var final_transcript = '';
+var history
 
 var first_char = /\S/;
 var two_line = /\n\n/g;
@@ -23,13 +24,8 @@ var silenceVerifyAverage
 var silenceTimer
 var silenceCount = 0
 
-var actualFinalTranscription = ""
-var actualInterimTranscription = ""
-var lastFinalTranscription = ""
-var lastInterimTranscription = ""
-var combined_interim_transcript = ""
-var combined_final_transcript = ""
 var numberHeight = 40
+var manager = new TranscriptionManager()
 
 
 
@@ -59,12 +55,10 @@ chrome.runtime.onMessage.addListener(
       isStopRecognized = true
       isDeleteTranscriptionHistory = true
       recognition.stop();
-      combined_final_transcript = ""
-      combined_interim_transcript = ""
-      lastFinalTranscription = ""
-      lastInterimTranscription = ""
-      actualFinalTranscription = ""
-      actualInterimTranscription = ""
+      //
+      //*reniciar container
+      manager.reset()
+      //
       container.interim_span.innerHTML = ""
       container.final_span.innerHTML = ""
     } else if (request.language) {
@@ -91,40 +85,21 @@ recognition.onstart = function() {
 recognition.onresult = function(event) {
   t0 = performance.now();
 
-  var interim_transcript = '';
-  final_transcript = '';
-
   for (var i = event.resultIndex; i < event.results.length; ++i) {
     if (event.results[i].isFinal) {
-      final_transcript += event.results[i][0].transcript;
+      // final_transcript += event.results[i][0].transcript;
+      manager.finishTranscription()
+      history += event.results[i][0].transcript;
     } else if (event.results[i][0].confidence >= 0.6) {
-      interim_transcript += event.results[i][0].transcript;
+      manager.add(event.results[i][0].transcript)
     }
   }
 
-  combined_interim_transcript = lastInterimTranscription + " " + interim_transcript
-
-    //teste
-
-    if (combined_interim_transcript == actualInterimTranscription ) {
-      console.log("some error is happening, and i need to understand and solve this, please stop and continue")
-      return
-    }
-
-    //
-
-
-  combined_final_transcript = lastFinalTranscription + " " + final_transcript
-  container.final_span.innerHTML = combined_final_transcript;
-
-  container.interim_span.innerHTML = combined_interim_transcript;
-
-  actualFinalTranscription = combined_final_transcript
-  actualInterimTranscription = combined_interim_transcript
+  // container.final_span.innerHTML = final_transcript
+  container.interim_span.innerHTML = manager.getAll();
   
   t1 = performance.now();
   container.scrollIfNeeds()
-
   //
 }
 
@@ -132,16 +107,7 @@ function capitalize(s) {
   return s.replace(first_char, function(m) { return m.toUpperCase(); });
 }
 
-function linebreak(s) {
-  return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
-}
-
 recognition.onend = function() {
-
-  if (!isDeleteTranscriptionHistory) {
-    lastInterimTranscription = actualInterimTranscription
-    lastFinalTranscription = actualFinalTranscription
-  }
   
   if (!isStopRecognized) {
     recognition.start()
@@ -159,6 +125,8 @@ recognition.onend = function() {
 };
 
 recognition.onerror = function(event) {
+  isStopRecognized = true
+
   console.log("onerror")
   if (event.error == 'no-speech') {
     console.log("no-speech")
@@ -171,11 +139,9 @@ recognition.onerror = function(event) {
   }
   if (event.error == 'not-allowed') {
     console.log("not-allowed")
-    isStopRecognized = true
     recognition.stop()
     ignore_onend = true;
   }
-  isStopRecognized = false
 };
 
 //functions
@@ -204,14 +170,13 @@ function generatePDF() {
 
 
   for (var i in fonts) {
-    console.log(combined_final_transcript)
     if (fonts.hasOwnProperty(i)) {
       font = fonts[i]
       size = sizes[i]
 
       lines = doc.setFont(font[0], font[1])
         .setFontSize(size)
-        .splitTextToSize(combined_interim_transcript, 7.5)
+        .splitTextToSize(history, 7.5)
 
       doc.text(0.5, verticalOffset + size / 72, lines)
 
@@ -252,11 +217,17 @@ function setHeightContainer() {
 
 function addJsModule() {
   const script = document.createElement('script');
+  const script2 = document.createElement('script');
   const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
 
   script.setAttribute("type", "module");
   script.setAttribute("src", chrome.extension.getURL('src/js/model/transcriptionContainerModel.js'));
+
+  script2.setAttribute("type", "module");
+  script2.setAttribute("src", chrome.extension.getURL('src/js/presenter/transcriptionManager.js'));
+
   head.insertBefore(script, head.lastChild);
+  head.insertBefore(script2, head.lastChild);
 }
 
 function convertLanguageNameToCode(language) {
