@@ -6,7 +6,7 @@ var isStopRecognized = false
 var isDeleteTranscriptionHistory = false
 
 var isFullScreen = false
-var history = ""
+var wholeHistory = ""
 
 var recognizing = false;
 var ignore_onend;
@@ -23,8 +23,6 @@ var silenceCount = 0
 
 var numberHeight = 40
 var manager = new TranscriptionManager()
-
-
 
 setup()
 
@@ -85,7 +83,8 @@ recognition.onresult = function(event) {
   for (var i = event.resultIndex; i < event.results.length; ++i) {
     if (event.results[i].isFinal) {
       manager.finishTranscription()
-      history += event.results[i][0].transcript;
+      wholeHistory += event.results[i][0].transcript;
+      wholeHistory += " "
     } else if (event.results[i][0].confidence >= 0.6) {
       manager.add(event.results[i][0].transcript)
     }
@@ -107,7 +106,6 @@ recognition.onend = function() {
   if (!isStopRecognized) {
     recognition.start()
   } else {
-    recognition.stop()
     setupInstance()
     container.shouldDisplay(false)
   }
@@ -120,22 +118,21 @@ recognition.onend = function() {
 };
 
 recognition.onerror = function(event) {
-  isStopRecognized = true
-
   console.log("onerror")
   if (event.error == 'no-speech') {
     console.log("no-speech")
-
     ignore_onend = true;
   }
   if (event.error == 'audio-capture') {
     console.log("audio-capture");
     ignore_onend = true;
+    isStopRecognized = true
   }
   if (event.error == 'not-allowed') {
     console.log("not-allowed")
     recognition.stop()
     ignore_onend = true;
+    isStopRecognized = true
   }
 };
 
@@ -168,10 +165,9 @@ function generatePDF() {
     if (fonts.hasOwnProperty(i)) {
       font = fonts[i]
       size = sizes[i]
-
       lines = doc.setFont(font[0], font[1])
         .setFontSize(size)
-        .splitTextToSize(history, 7.5)
+        .splitTextToSize(wholeHistory, 7.5)
 
       doc.text(0.5, verticalOffset + size / 72, lines)
 
@@ -244,7 +240,7 @@ function verifySilenceTime() {
   }
 
 
-  if (silenceCount >= 1) {
+  if (silenceCount >= 2) {
     recognition.stop()
   }
 
