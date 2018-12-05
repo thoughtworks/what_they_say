@@ -1,34 +1,39 @@
 const localStorage = new ChromeProvider(chrome)
 const language = new Language("")
 
-var bkg = chrome.extension.getBackgroundPage();
+var bkg = chrome.extension.getBackgroundPage()
+var numberHeight = 40
 
 // - properties -
 
-var playButton = document.getElementById('play-circle-transcription');
-var playTitle = document.getElementById('play-title-transcription');
+var playButton = document.getElementById('play-circle-transcription')
+var playTitle = document.getElementById('play-title-transcription')
 
-var stopButton = document.getElementById('stop-circle-transcription');
-var stopTitle = document.getElementById('stop-title-transcription');
+var stopButton = document.getElementById('stop-circle-transcription')
+var stopTitle = document.getElementById('stop-title-transcription')
 
-var recordButton = document.getElementById('record-circle-transcription');
-var recordTitle = document.getElementById('record-title-transcription');
+var recordButton = document.getElementById('record-circle-transcription')
+var recordTitle = document.getElementById('record-title-transcription')
 
-var increaseButton = document.getElementById('wts-increase-line-img');
-var decreaseButton = document.getElementById('wts-decrease-line-img');
+var increaseButton = document.getElementById('wts-increase-line-img')
+var decreaseButton = document.getElementById('wts-decrease-line-img')
 var numberLabel = document.getElementById('wts-menu-input-number')
-var numberHeight = 40
+
+var historyButton = document.getElementById('history')
+
+var feedbackButton = document.getElementById('feedback-link-button')
 
 var version = document.getElementById('version')
 var transcriptionButton = new TranscriptionButtonStatus()
 
 // - on load -
 
-document.getElementById('history').onclick = sendHistoryMessageTab;
-playButton.onclick = didTapTranscriptionButton;
-stopButton.onclick = didTapStopButton;
-increaseButton.onclick = didTapIncreaseButton;
-decreaseButton.onclick = didTapDecreaseButton;
+historyButton.onclick = didTapHistoryButton
+playButton.onclick = didTapTranscriptionButton
+stopButton.onclick = didTapStopButton
+increaseButton.onclick = didTapIncreaseButton
+decreaseButton.onclick = didTapDecreaseButton
+feedbackButton.onclick = didTapFeedbackButton
 
 
 window.addEventListener("DOMContentLoaded", function() {
@@ -89,6 +94,7 @@ function setTranscriptionButtonSkin() {
 }
 
 function didTapTranscriptionButton() {
+  trackButton("transcription-start-pause-button")
   sendStartStopTranscriptionMessageContent()
   updateTranscriptionButton()
   closePopUpIfTranscriptionClicked()
@@ -117,8 +123,9 @@ function closePopUpIfTranscriptionClicked() {
    }
 }
 
-function sendHistoryMessageTab() {
-  console.log("cliquei")
+function didTapHistoryButton() {
+  trackButton("history-button")
+
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {action: "history"}, {});
     });
@@ -137,6 +144,7 @@ function saveNumberHeight() {
 }
 
 function didTapStopButton() {
+  trackButton("stop-button")
 
   if (!transcriptionButton.action) {
     updateTranscriptionButton()
@@ -148,7 +156,8 @@ function didTapStopButton() {
 }
 
 function didTapIncreaseButton() {
-  
+  trackButton("increase-size-button")
+
   if (numberHeight <= 200) {
     numberHeight += 20
   }
@@ -162,6 +171,8 @@ function didTapIncreaseButton() {
 }
 
 function didTapDecreaseButton() {
+  trackButton("decrease-size-button")
+
   if (numberHeight >= 60) {
     numberHeight -= 20
   }
@@ -172,6 +183,11 @@ function didTapDecreaseButton() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {action: "decrease"}, {});
   });
+}
+
+function didTapFeedbackButton() {
+  console.log("click")
+  trackButton("feedback-button")
 }
 
 // timer
@@ -210,3 +226,7 @@ _gaq.push(['_trackPageview']);
   ga.src = 'https://ssl.google-analytics.com/ga.js';
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
+
+function trackButton(event) {
+  _gaq.push(['_trackEvent', event, 'clicked']);
+};

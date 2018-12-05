@@ -25,6 +25,7 @@ var numberHeight = 40
 var manager = new TranscriptionManager()
 
 setup()
+setupInstance()
 
 //listeners
 
@@ -59,10 +60,8 @@ chrome.runtime.onMessage.addListener(
     } else if (request.language) {
       recognition.lang = request.language;
     } else if (request.action == "increase") {
-      console.log("increase")
       container.increase()
     } else if (request.action == "decrease") {
-      console.log("decrease")
       container.decrease()
     }
   });
@@ -259,7 +258,6 @@ function verifySilenceTime() {
 
 function getCurrentLanguague(language) {
   var defaultLanguage = "pt-BR"
-
   return !language ? defaultLanguage : language
 }
 
