@@ -43,7 +43,7 @@ positionButton.onclick = didTapPositionButton
 
 window.addEventListener("DOMContentLoaded", function() {
   viewLoadSetup()
-}, false);
+}, false)
 
 // - functions -
 
@@ -74,7 +74,7 @@ function loadHeightContainer() {
       numberHeight = response.numberHeight
       numberLabel.textContent = (numberHeight/20).toString() 
     }
-  });
+  })
 }
 
 function saveNumberHeight() {
@@ -85,14 +85,14 @@ function saveNumberHeight() {
 
 function setTranscriptionButtonSkin() {
   if (!transcriptionButton.action) {
-    playButton.classList.remove("play-circle-start");
+    playButton.classList.remove("play-circle-start")
     playButton.classList.add("play-circle-pause")
     playTitle.textContent = "Pause"
     bkg.setTimer(true)
   } else {
     bkg.setTimer(false)
     recordTitle.textContent = "00:00"
-    playButton.classList.remove("play-circle-pause");
+    playButton.classList.remove("play-circle-pause")
     playButton.classList.add("play-circle-start")
     playTitle.textContent = "Start"
   }
@@ -108,8 +108,8 @@ function didTapTranscriptionButton() {
 function sendStartStopTranscriptionMessageContent() {
   var action =  getMessageActionButton()
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {"action" : action}, {});
-    });
+      chrome.tabs.sendMessage(tabs[0].id, {"action" : action}, {})
+    })
 }
 
 function getMessageActionButton() {
@@ -124,7 +124,7 @@ function updateTranscriptionButton() {
 
 function closePopUpIfTranscriptionClicked() {
   if (!transcriptionButton.action) {
-    window.close();
+    window.close()
    }
 }
 
@@ -133,23 +133,25 @@ function didTapHistoryButton() {
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {action: "history"}, {});
-    });
+    })
 }
 
 function didTapClearButton() {
+  window.close()
   trackButton("clear-button")
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {action: "clear"}, {});
-    });
+    })
 }
 
 function didTapPositionButton() {
+  window.close()
   trackButton("position-button")
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {action: "position"}, {});
-    });
+    })
 }
 
 function saveLanguageStatus(language) {
@@ -173,7 +175,7 @@ function didTapStopButton() {
 
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {action: "stop"}, {});
-  });
+  })
 }
 
 function didTapIncreaseButton() {
@@ -188,7 +190,7 @@ function didTapIncreaseButton() {
 
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {action: "increase"}, {});
-  });
+  })
 }
 
 function didTapDecreaseButton() {
@@ -203,7 +205,7 @@ function didTapDecreaseButton() {
 
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {action: "decrease"}, {});
-  });
+  })
 }
 
 function didTapFeedbackButton() {
@@ -213,7 +215,7 @@ function didTapFeedbackButton() {
 
 // timer
 
-var responsetimer = setInterval(function(){
+var responsetimer = setInterval(function() {
   time = bkg.time
   var displaySeconds = time.s
   var displayMinutes = time.m
@@ -226,28 +228,28 @@ var responsetimer = setInterval(function(){
     displayMinutes = "0" + time.m.toString()
   }
 
-  var newTime =  displayMinutes + ":" + displaySeconds;
+  var newTime =  displayMinutes + ":" + displaySeconds
   recordTitle.textContent = newTime
-}, 1000);
+}, 1000)
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log(request)
   }
-);
+)
 
 // analytics
 
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-129965429-1']);
-_gaq.push(['_trackPageview']);
+var _gaq = _gaq || []
+_gaq.push(['_setAccount', 'UA-129965429-1'])
+_gaq.push(['_trackPageview'])
 
 (function() {
   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
   ga.src = 'https://ssl.google-analytics.com/ga.js';
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
+})()
 
 function trackButton(event) {
   _gaq.push(['_trackEvent', event, 'clicked']);
-};
+}
