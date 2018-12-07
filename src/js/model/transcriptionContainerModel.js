@@ -67,5 +67,17 @@ class TranscriptionContainerModel {
     getHeightClass() {
         return 'increase-level-' + this.height / 20
     }
+
+    changeContainer() {
+        if (this.div.className == "transcription-container-center") {
+            console.log("center")
+            this.div.classList.remove("transcription-container-center")
+            this.div.classList.add("transcription-container")
+        } else {
+            console.log("normal")
+            this.div.classList.remove("transcription-container")
+            this.div.classList.add("transcription-container-center")
+        }
+    }
 }
 

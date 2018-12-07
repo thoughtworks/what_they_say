@@ -23,6 +23,9 @@ var historyButton = document.getElementById('history')
 
 var feedbackButton = document.getElementById('feedback-link-button')
 
+var clearButton = document.getElementById('clear-button')
+var positionButton = document.getElementById('position-button')
+
 var version = document.getElementById('version')
 var transcriptionButton = new TranscriptionButtonStatus()
 
@@ -34,6 +37,8 @@ stopButton.onclick = didTapStopButton
 increaseButton.onclick = didTapIncreaseButton
 decreaseButton.onclick = didTapDecreaseButton
 feedbackButton.onclick = didTapFeedbackButton
+clearButton.onclick = didTapClearButton
+positionButton.onclick = didTapPositionButton
 
 
 window.addEventListener("DOMContentLoaded", function() {
@@ -128,6 +133,22 @@ function didTapHistoryButton() {
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {action: "history"}, {});
+    });
+}
+
+function didTapClearButton() {
+  trackButton("clear-button")
+
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {action: "clear"}, {});
+    });
+}
+
+function didTapPositionButton() {
+  trackButton("position-button")
+
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {action: "position"}, {});
     });
 }
 

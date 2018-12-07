@@ -51,10 +51,7 @@ chrome.runtime.onMessage.addListener(
       isStopRecognized = true
       isDeleteTranscriptionHistory = true
       recognition.stop();
-      //
-      //*reniciar container
       manager.reset()
-      //
       container.interim_span.innerHTML = ""
       container.final_span.innerHTML = ""
     } else if (request.language) {
@@ -63,6 +60,15 @@ chrome.runtime.onMessage.addListener(
       container.increase()
     } else if (request.action == "decrease") {
       container.decrease()
+    } else if (request.action == "clear") {
+      recognition.abort()
+      silenceCount = 0
+      manager.reset()
+      container.interim_span.innerHTML = ""
+      container.final_span.innerHTML = ""
+    } else if (request.action == "position") {
+      console.log("position-change")
+      container.changeContainer()
     }
   });
 
