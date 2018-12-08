@@ -56,8 +56,10 @@ chrome.runtime.onMessage.addListener(
       isPauseRecognized = false
       isStopRecognized = true
       isDeleteTranscriptionHistory = true
+      recognition.abort()
       recognition.stop();
       manager.reset()
+      removeSilenceAlert()
       container.interim_span.innerHTML = ""
       container.final_span.innerHTML = ""
     } else if (request.language) {
@@ -122,6 +124,7 @@ recognition.onend = function() {
     setupInstance()
     container.shouldDisplay(false)
   } else if (isPauseRecognized) {
+    removeSilenceAlert()
     container.shouldDisplay(true)
   }
 
@@ -284,7 +287,7 @@ function setupInstance() {
 
 function addSilenceAlert() {
   if(!document.body.contains(silenceAlert) && !isStopRecognized) {
-    silenceAlert.textContent = "Silence Detect"
+    silenceAlert.textContent = "Silence Detect, if this keep for a long time please stop and play, if this don't work for three times, please close and open your browse, we are working on this =)"
     className = "transcription-container"
     silenceAlert.className = className
     document.body.appendChild(silenceAlert)
