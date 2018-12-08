@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "What They Say",
   "description": "Generate your own closed captions in real time by the sound of your microphone",
-  "version": "1.5.25",
+  "version": "1.5.26",
   "author": "Jackson",
   "short_name": "CC",
   "browser_action": {
