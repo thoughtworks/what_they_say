@@ -90,8 +90,7 @@ function setTranscriptionButtonSkin() {
     playTitle.textContent = "Pause"
     bkg.setTimer(true)
   } else {
-    bkg.setTimer(false)
-    recordTitle.textContent = "00:00"
+    bkg.pauseTimer()
     playButton.classList.remove("play-circle-pause")
     playButton.classList.add("play-circle-start")
     playTitle.textContent = "Start"
@@ -172,6 +171,8 @@ function didTapStopButton() {
   if (!transcriptionButton.action) {
     updateTranscriptionButton()
   }
+
+  bkg.setTimer(false)
 
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {action: "stop"}, {});
