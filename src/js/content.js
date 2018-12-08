@@ -3,11 +3,13 @@ var container
 
 var recognition = new webkitSpeechRecognition();
 var isStopRecognized = false
+var isPauseRecognized = false
 var isDeleteTranscriptionHistory = false
 
 var isFullScreen = false
 var wholeHistory = ""
 
+//err0rs
 var recognizing = false;
 var ignore_onend;
 var first_char = /\S/;
@@ -20,6 +22,8 @@ var t3
 var silenceVerifyAverage
 var silenceTimer
 var silenceCount = 0
+var silenceAlert = document.createElement('div')
+//err0rs
 
 var numberHeight = 40
 var manager = new TranscriptionManager()
@@ -36,6 +40,7 @@ chrome.runtime.onMessage.addListener(
 
     if (request.action == "start") {
       isStopRecognized = false
+      isPauseRecognized = false
       isDeleteTranscriptionHistory = false
       startRecognition();
       silenceTimer = setInterval(verifySilenceTime, 3000);
@@ -43,11 +48,12 @@ chrome.runtime.onMessage.addListener(
       generatePDF();
     } else if (request.action == "pause") {
       console.log("pause")
-      isStopRecognized = true
+      isPauseRecognized = true
       recognition.stop();
       clearInterval(silenceTimer);
     } else if (request.action == "stop") {
       console.log("stop")
+      isPauseRecognized = false
       isStopRecognized = true
       isDeleteTranscriptionHistory = true
       recognition.stop();
@@ -78,7 +84,10 @@ recognition.onstart = function() {
   console.log("onstart")
   
   setupInstance()
-  container.shouldDisplay(true)
+  if (silenceCount < 2) {
+    removeSilenceAlert()
+    container.shouldDisplay(true)
+  }
   recognizing = true;
 };
 
@@ -107,25 +116,24 @@ function capitalize(s) {
 }
 
 recognition.onend = function() {
-  
-  if (!isStopRecognized) {
+  if (!isStopRecognized && !isPauseRecognized) {
     recognition.start()
-  } else {
+  } else if (isStopRecognized && !isPauseRecognized) {
     setupInstance()
     container.shouldDisplay(false)
+  } else if (isPauseRecognized) {
+    container.shouldDisplay(true)
   }
 
   console.log("onend")
   recognizing = false;
-  if (ignore_onend) {
-    return;
-  }
 };
 
 recognition.onerror = function(event) {
   console.log("onerror")
   if (event.error == 'no-speech') {
     console.log("no-speech")
+    addSilenceAlert()
     ignore_onend = true;
   }
   if (event.error == 'audio-capture') {
@@ -246,6 +254,7 @@ function verifySilenceTime() {
 
 
   if (silenceCount >= 2) {
+    addSilenceAlert() 
     recognition.stop()
   }
 
@@ -270,5 +279,21 @@ function getCurrentLanguague(language) {
 function setupInstance() {
   if (!container) {
     container = new TranscriptionContainerModel(document,numberHeight)
+  }
+}
+
+function addSilenceAlert() {
+  if(!document.body.contains(silenceAlert) && !isStopRecognized) {
+    silenceAlert.textContent = "Silence Detect"
+    className = "transcription-container"
+    silenceAlert.className = className
+    document.body.appendChild(silenceAlert)
+    container.shouldDisplay(false)
+  }
+}
+
+function removeSilenceAlert() {
+  if (document.body.contains(silenceAlert)) {
+    document.body.removeChild(silenceAlert)
   }
 }

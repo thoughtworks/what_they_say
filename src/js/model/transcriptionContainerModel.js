@@ -69,7 +69,7 @@ class TranscriptionContainerModel {
     }
 
     changeContainer() {
-        if (this.div.className == "transcription-container-center") {
+        if (this.div.classList.contains("transcription-container-center")) {
             console.log("center")
             this.div.classList.remove("transcription-container-center")
             this.div.classList.add("transcription-container")
