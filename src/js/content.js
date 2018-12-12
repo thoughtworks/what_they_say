@@ -122,7 +122,7 @@ recognition.onend = function() {
     recognition.start()
   } else if (isStopRecognized && !isPauseRecognized) {
     setupInstance()
-    container.shouldDisplay(true)
+    container.shouldDisplay(false)
   } else if (isPauseRecognized) {
     removeSilenceAlert()
   }
