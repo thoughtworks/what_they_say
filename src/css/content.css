@@ -22,7 +22,7 @@
   bottom : calc(5% + 60px);;
   left : 0;
   right: 0;
-  margin: auto;
+  margin: 0 auto;
   text-align : center;
   background-color : rgba(54, 97, 182, 0.8);
   position :absolute;
