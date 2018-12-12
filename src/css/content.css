@@ -18,6 +18,7 @@
 }
 
 .silence-transcription-alert {
+  padding: 0;
   height: auto;
   bottom : calc(5% + 60px);;
   left : 0;
@@ -28,7 +29,7 @@
   position :absolute;
   color : rgba(255, 255, 255, 0.97);
   font-size : 10px;
-  width : 40px;
+  width : 90px;
   transform : translate(50%);
   border : 2px solid white;
   border-radius: 5px;
