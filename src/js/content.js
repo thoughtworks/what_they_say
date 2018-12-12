@@ -86,9 +86,9 @@ recognition.onstart = function() {
   console.log("onstart")
   
   setupInstance()
+  container.shouldDisplay(true)
   if (silenceCount < 2) {
     removeSilenceAlert()
-    container.shouldDisplay(true)
   }
   recognizing = true;
 };
@@ -122,10 +122,9 @@ recognition.onend = function() {
     recognition.start()
   } else if (isStopRecognized && !isPauseRecognized) {
     setupInstance()
-    container.shouldDisplay(false)
+    container.shouldDisplay(true)
   } else if (isPauseRecognized) {
     removeSilenceAlert()
-    container.shouldDisplay(true)
   }
 
   console.log("onend")
@@ -287,11 +286,10 @@ function setupInstance() {
 
 function addSilenceAlert() {
   if(!document.body.contains(silenceAlert) && !isStopRecognized) {
-    silenceAlert.textContent = "Silence Detect, if this keep for a long time please stop and play, if this don't work for three times, please close and open your browse, we are working on this =)"
-    className = "transcription-container"
+    silenceAlert.textContent = "Silence Detect"
+    className = "silence-transcription-alert"
     silenceAlert.className = className
     document.body.appendChild(silenceAlert)
-    container.shouldDisplay(false)
   }
 }
 
