@@ -1,12 +1,20 @@
 # What They Say (O Que Eles Disseram)
 
-Nós estamos no #hacktoberfest2018
+[![Build Status](https://travis-ci.org/3jacksonsmith/what_they_say.svg?branch=master)](https://travis-ci.org/3jacksonsmith/what_they_say)
+
+--------
+### BAIXAR VERSÃO ESTÁVEL
+
+O app está hospedado no Google Webstore::
+- [(Clique para **BAIXAR** a versão oficial)](http://cli.re/gREZMQ)
+
+Por favor, se você puder, baixe e enviar feedbacks/comentários para nós =D
+
 
 ### Resumo
-
----
-
-## Estamos usando legenda em tempo real para apoiar pessoas com deficiência auditiva
+--------
+Estamos usando legenda em tempo real para apoiar pessoas com deficiência auditiva
+--------
 
 ### Isso é sobre o quê?
 
@@ -25,6 +33,7 @@ Nós gostaríamos que essa extensão ajudasse pessoas com deficiência auditiva 
 ### SoundFlower
 
 Com o SoundFlower você consegue criar um driver virtual que pode rotear a saída do seu áudio para a entrada de áudio. Com isso você consegue gerar legendas para os seus vídeos, hangouts, zoom, youtube e outros.
+
 
 Baixe-o aqui:
 
@@ -48,7 +57,8 @@ App nativo para rotear:
 
 ### Exemplos
 
-[<p align="center"><img src="https://lh3.googleusercontent.com/a_wRbnGSVXNPPtsz_7YfI-ZPRXGdSwZv3BF2Zy9O_5nN88ylixHqtwD_3h8EcJrNjylvWSRCdA=w640-h400-e365"></p>](http://google.com.au/)
+[<p align="center"><img src="https://media.giphy.com/media/1zgzKcxUHZszGnzfxD/giphy.gif"></p>](http://google.com.au/) 
+
 [<p align="center"><img src="https://lh3.googleusercontent.com/cWXbZguy_V5XQDqfsqYjFYdV155Nsi1lI_x6xTXXHkfkpuBWqDvegPN4Ktl9zjolNr5d_KfB=w640-h400-e365"></p>](http://google.com.au/)
 
 ## Recursos
@@ -59,10 +69,6 @@ Atualmente nós temos 2 recursos:
 2. Exibir um histórico das legendas criadas no console
 
 ## Instalação
-
-O app oficial está hospedado no Google Webstore:
-
-- https://chrome.google.com/webstore/detail/closed-captions/bgcmlahgdkcbpaecoepolbogkbgpmaod
 
 Para instalar após o download, siga os passos:
 
