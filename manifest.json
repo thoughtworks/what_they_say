@@ -1,13 +1,13 @@
 {
   "manifest_version": 2,
-  "name": "What They Say2",
+  "name": "What They Say",
   "description": "Generate your own closed captions in real time by the sound of your microphone",
-  "version": "1.5.35",
-  "author": "Jackson",
+  "version": "1.5.36",
+  "author": "ThoughtWorks",
   "short_name": "CC",
   "browser_action": {
     "default_icon": "src/img/wts_icon_67.png",
-    "default_title": "What They Say2",
+    "default_title": "What They Say",
     "default_popup": "src/view/popup.html"
   },
   "icons": {
