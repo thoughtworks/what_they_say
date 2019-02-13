@@ -6,7 +6,7 @@
 ### DOWNLOAD STABLE VERSION
 
 The app is hosted on Google Webstore:
-- [(Click here to **DOWNLOAD** official version)](http://cli.re/gREZMQ)
+- [(Click here to **DOWNLOAD** official version)](https://chrome.google.com/webstore/detail/what-they-say/emcelbejfmkpmhfllaehfkglpaddilln)
 
 Please if you can download and give feedback/comment for us =D
 
