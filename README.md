@@ -50,10 +50,7 @@ Native app to route :
 2. For Windows users: 
 - In progress
 
-### Examples
-
-[<p align="center"><img src="https://media.giphy.com/media/1zgzKcxUHZszGnzfxD/giphy.gif"></p>](http://google.com.au/) 
-
+### Example
 
 [<p align="center"><img src="https://lh3.googleusercontent.com/cWXbZguy_V5XQDqfsqYjFYdV155Nsi1lI_x6xTXXHkfkpuBWqDvegPN4Ktl9zjolNr5d_KfB=w640-h400-e365"></p>](http://google.com.au/)
 
