@@ -60,6 +60,8 @@ Nowadays we have 2 Features:
 
 1. Generate Closed Caption by Microphone
 2. Print on console the history of closed captions recorded
+3. Adjust font size
+4. Adjust font position
 
 
 ## Installation
