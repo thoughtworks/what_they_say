@@ -19,11 +19,11 @@ We are using real time closed caption to support people with disability hearing
 ### What is about it?
 This project is a real time closed caption made to disability hearing people, but people without disability can use it to take notes.
 
-We started this project with a reasearch of two friends deaf on [ThoughtWorks](https://www.thoughtworks.com/)
+We started this project with a reasearch of two deaf friends on [ThoughtWorks](https://www.thoughtworks.com/)
 
 They found the project [speak-extension](https://github.com/charliegerard/speak-extension) by Charlie Gerard and we tried to implement something closer and more customized.
 
-Now we have a name: "What Thet Say" and people helping =)
+Now we have a name: "What They Say" and people helping =)
 
 ### What is our goal?
 
@@ -66,9 +66,9 @@ Nowadays we have 2 Features:
 
 ## Installation
 
-To use the developer code you must download ou clone this coee, after this:
+To use the developer code you must download ou clone this code, after this:
  
 * Open on Google Chrome: chrome://extensions
 * Active the developer mode
-* Import this project unziped
+* Import this project unzipped
 * Use it
